@@ -1,0 +1,5 @@
+.project
+.settings/org.eclipse.wst.common.component
+.settings/org.eclipse.wst.common.project.facet.core.xml
+css/stickler.css
+js/jquery-2.1.1.js
