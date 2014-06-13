@@ -28,17 +28,22 @@
 <!-- Main Logic -->
 <script type='text/javascript'>
 		$(document).ready(function() {
+			var NOTE_WIDTH = 150;
+			var NOTE_HEIGHT = 100;
+		
 			$('#add_note').on('click.add' , function() {
-				createNewNote(150 , 150 , $('#note_area') ,'task-note');
+				createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note_area') ,'task-note');
 			});
 			
 			$('#sticky').draggable();
 			$('#sticky').resizable({
-				handle : 'n,s,e,w,ne,se,sw,nw'
+				handle : 'n,s,e,w,ne,se,sw,nw' , 
+				minWidth: NOTE_WIDTH , 
+				minHeight: NOTE_HEIGHT
 			});
 			$('#sticky').css({
-					'width' 	: 	toPx(150) 	, 
-					'height'	: 	toPx(150)	,
+					'width' 	: 	toPx(NOTE_WIDTH) 	, 
+					'height'	: 	toPx(NOTE_HEIGHT)	,
 					
 					'zIndex'	:	$.topZIndex('.task-note') + 1	
 				});
@@ -46,7 +51,6 @@
 				append: '' ,
 				callback: function() {
 					var $myNote = $(this).parents('.task-note');
-					console.log($myNote);
 					
 					var $myHeader = $($myNote.children().get(0));
 					var $mySection = $($myNote.children().get(1));
@@ -75,18 +79,15 @@
 		<div id='note_area'>
 			<div id='sticky' class='task-note'>
 				<header class='task-note-header'>
-					<span>Task Action</span>
-
+					<a class='task-note-ui-cancel'><span class='ui-icon ui-icon-close'></span></a>
 				</header>
-				<section>
+				<section class='task-note-main'>
 					<textarea class='task-note-title' placeholder='<Your Note Title>'></textarea>
 					<textarea class='task-note-result' placeholder='<Your Task Result>'></textarea>
-					<span>Goal</span>
 				</section>
-				<footer>
-					<header>SubTask Action</header>
-					<section>
-						<span>My Tasks</span>
+				<footer class='task-note-subtask'>
+					<header >No Subtasks</header>
+					<section class='task-note-subtasks'>
 					</section>
 				</footer>
 			</div>
