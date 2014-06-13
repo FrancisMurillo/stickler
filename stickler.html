@@ -9,6 +9,7 @@
 <script src='js/jquery-ui-1.10.4.custom.min.js'></script>
 <script src='js/jquery.topzindex.min.js'></script>
 
+<script src='js/note.js'></script>
 
 <!--  Custom Functions -->
 <script>
@@ -20,51 +21,13 @@
 		return unit + 'px';
 	}
 
-
-	_noteWidth = 150;
-	_noteHeight = 150; 
-	/* Generates a random X coordinate for a note */
-	function randomNoteX() {
-		return	( Math.random() * ($('body').width() - 2 *  _noteWidth)).toFixed();
-	}
-	
-	/* Generates a random Y coordinate for a note, see randomNoteX() */ 	
-	function randomNoteY() {
-		return ( Math.random() * ($('body').height() - 2 * _noteHeight)).toFixed();
-	}
-	
 </script>
 
 <!-- Main Logic -->
 <script type='text/javascript'>
 		$(document).ready(function() {
 			$('#add_note').on('click.add' , function() {
-				var noteHTML = "<div></div>";
-				var $newNote = $(noteHTML, {
-									'class'	:	'task_note'	,
-									'text'	:	'Hello'			
-								});
-
-				$newNote.appendTo($('#note_area'));	
-				$newNote.draggable({
-					containment:'parent' , 
-					zIndex : 9007199254740992,	
-					stop: function() {
-						$(this).css('z-index' , $.topZIndex('.task_note')+ 1);
-					}
-				})
-				$newNote.resizable();
-								
-				$newNote.css({			
-					'width' 	: 	toPx(_noteWidth) 	, 
-					'height'	: 	toPx(_noteHeight)	,
-					
-					'left'		:	toPx(randomNoteX())	,
-					'top'		:	toPx(randomNoteY())	,
-					
-					'zIndex'	:	$.topZIndex('.task_note') + 1	
-				});
-				
+				createNewNote(150 , 150 , $('#note_area') ,'task_note');
 			});
 			
 			$('#sticky').draggable();
@@ -72,8 +35,8 @@
 				handle : 'n,s,e,w,ne,se,sw,nw'
 			});
 			$('#sticky').css({
-					'width' 	: 	toPx(_noteWidth) 	, 
-					'height'	: 	toPx(_noteHeight)	,
+					'width' 	: 	toPx(150) 	, 
+					'height'	: 	toPx(150)	,
 					
 					'zIndex'	:	$.topZIndex('.task_note') + 1	
 				});
@@ -84,7 +47,6 @@
 	<div id='wrapper'>
 		<div id='action_area'>
 			<a id='add_note' href='#'>Roar</a>
-			<a download='file:///C:/Users/FVMurillo/Desktop/Robot/Workspace/Functional%20Web/stickler/stickler.html#' href='#'>Roar</a>
 		</div>
 		<div id='note_area'>
 			<div id='sticky' class='task_note'>
