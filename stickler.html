@@ -2,12 +2,14 @@
 <html>
 <head>
 <title>Stickler</title>
-<link href='css/jquery-ui-1.10.4.custom.min.css' rel='stylesheet'/>
+<link href='css/jquery-ui-1.10.4.custom.min.css' rel='stylesheet' />
 <link href='css/stickler.css' rel='stylesheet' />
 
 <script src='js/jquery-2.1.1.min.js'></script>
 <script src='js/jquery-ui-1.10.4.custom.min.js'></script>
+
 <script src='js/jquery.topzindex.min.js'></script>
+<script src='js/jquery.autosize.min.js'></script>
 
 <script src='js/note.js'></script>
 
@@ -27,7 +29,7 @@
 <script type='text/javascript'>
 		$(document).ready(function() {
 			$('#add_note').on('click.add' , function() {
-				createNewNote(150 , 150 , $('#note_area') ,'task_note');
+				createNewNote(150 , 150 , $('#note_area') ,'task-note');
 			});
 			
 			$('#sticky').draggable();
@@ -38,23 +40,47 @@
 					'width' 	: 	toPx(150) 	, 
 					'height'	: 	toPx(150)	,
 					
-					'zIndex'	:	$.topZIndex('.task_note') + 1	
+					'zIndex'	:	$.topZIndex('.task-note') + 1	
 				});
+			$('textarea').autosize({
+				append: '' ,
+				callback: function() {
+					var $myNote = $(this).parents('.task-note');
+					console.log($myNote);
+					
+					var $myHeader = $($myNote.children().get(0));
+					var $mySection = $($myNote.children().get(1));
+					var $myFooter = $($myNote.children().get(2));
+
+					$myNote.css({
+						'height' : $myHeader.height() + $mySection.height() + $myFooter.height()
+					});
+				}
+			});		
+		
 		});
 	</script>
 </head>
 <body>
 	<div id='wrapper'>
-		<div id='action_area'>
+		<div id='action-area'>
+			<section id='action-area-types'>
+				<a id='all-filter' class='task-filter-leftmost' href='#'>All</a> <a
+					id='task-filter' href='#'>Tasks</a> <a id='issue-filter'
+					class='task-filter-rightmost' href='#'>Issues</a>
+			</section>
+
 			<a id='add_note' href='#'>Roar</a>
 		</div>
 		<div id='note_area'>
-			<div id='sticky' class='task_note'>
-				<header>
+			<div id='sticky' class='task-note'>
+				<header class='task-note-header'>
 					<span>Task Action</span>
+
 				</header>
 				<section>
-					<span>Title</span>
+					<textarea class='task-note-title' placeholder='<Your Note Title>'></textarea>
+					<textarea class='task-note-result' placeholder='<Your Task Result>'></textarea>
 					<span>Goal</span>
 				</section>
 				<footer>
