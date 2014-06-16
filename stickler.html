@@ -10,6 +10,7 @@
 
 <script src='js/jquery.topzindex.min.js'></script>
 <script src='js/jquery.autosize.min.js'></script>
+<script src="js/jquery.timeago.min.js" type="text/javascript"></script>
 
 <script src='js/note.js'></script>
 
@@ -28,8 +29,8 @@
 <!-- Main Logic -->
 <script type='text/javascript'>
 		$(document).ready(function() {
-			var NOTE_WIDTH = 150;
-			var NOTE_HEIGHT = 100;
+			var NOTE_WIDTH = 200;
+			var NOTE_HEIGHT = 250;
 		
 			$('#add_note').on('click.add' , function() {
 				createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note_area') ,'task-note');
@@ -47,6 +48,8 @@
 					
 					'zIndex'	:	$.topZIndex('.task-note') + 1	
 				});
+			$('.timeago').timeago();
+				
 			$('textarea').autosize({
 				append: '' ,
 				callback: function() {
@@ -77,18 +80,19 @@
 			<a id='add_note' href='#'>Roar</a>
 		</div>
 		<div id='note_area'>
-			<div id='sticky' class='task-note'>
+			<div id='sticky' class='task-note' title='June 17 , 2014'>
 				<header class='task-note-header'>
-					<a class='task-note-ui-cancel'><span class='ui-icon ui-icon-close'></span></a>
+					<b>...</b>
+					<a	class='task-note-ui-cancel'><span class='ui-icon ui-icon-close'></span></a>
+					<span class='timeago' title='June 17 , 2014'></span>
 				</header>
 				<section class='task-note-main'>
 					<textarea class='task-note-title' placeholder='<Your Note Title>'></textarea>
 					<textarea class='task-note-result' placeholder='<Your Task Result>'></textarea>
 				</section>
 				<footer class='task-note-subtask'>
-					<header >No Subtasks</header>
-					<section class='task-note-subtasks'>
-					</section>
+					<header>No Subtasks</header>
+					<section class='task-note-subtasks'></section>
 				</footer>
 			</div>
 		</div>

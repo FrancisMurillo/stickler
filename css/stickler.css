@@ -147,7 +147,7 @@ body {
 }
 
 .task-note-header {
-	background: #f2f294;
+	background: #f2f294;	
 }
 .task-note-footer {
 	
@@ -156,7 +156,9 @@ body {
 .task-note-ui-cancel {
 	position: 	relative;
 }
+.task-note-header .timeago {
+	float: right;
+}
 .task-note-ui-cancel span{
 	float: right;
-	
 }
