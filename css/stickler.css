@@ -1,0 +1,162 @@
+/* -----------------------*/
+/* ----->>> BASE <<<<-----*/
+/* -----------------------*/
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+}
+
+#wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+/* ------------------------------*/
+/* ----->>> ACTIONS AREA <<<-----*/
+/* ------------------------------*/
+#action-area {
+	width: 100%;
+	height: 10%;
+	background: #627d4d; /* Old browsers */
+	background: -moz-linear-gradient(top, #627d4d 0%, #1f3b08 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #627d4d),
+		color-stop(100%, #1f3b08)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #627d4d 0%, #1f3b08 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #627d4d 0%, #1f3b08 100%);
+	/* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #627d4d 0%, #1f3b08 100%);
+	/* IE10+ */
+	background: linear-gradient(to bottom, #627d4d 0%, #1f3b08 100%);
+	/* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr='#627d4d',
+		endColorstr='#1f3b08', GradientType=0); /* IE6-9 */
+}
+
+#action-area-types {
+	width: 30%;
+	
+	display: inline-block;
+	
+}
+
+#action-area-types a {
+	width: 10%;
+	border-color: red;
+	
+	margin: -2px;
+	padding: 2px 8px;
+	
+	line-height: 2em;
+	text-decoration: none;
+}
+
+/* ---------------------------*/
+/* ----->>> NOTE AREA <<<-----*/
+/* ---------------------------*/
+#note_area {
+	position: relative;
+	width: 100%;
+	height: 90%;
+}
+
+/* Task Filters */
+#task-filter {
+	background: #ffff88; 
+}
+
+#all-filter {
+	background: #000000; 
+}
+
+#issue-filter {
+	background: #b6e026;
+}
+
+/* Edge Filter Smoothing */
+.task-filter-leftmost {
+	border-radius: 25px 0px 0px 25px;
+}
+
+.task-filter-rightmost {
+	border-radius: 0px 25px 25px 0px;
+}
+
+/* -----------------------------*/
+/* ----->>> STICKY NOTE <<<-----*/
+/* -----------------------------*/
+.task-note textarea {
+	background: transparent;
+	border: none;
+	height: 1.4em;
+	
+	font-family: Times New Roman;
+	
+	width: 100%;
+	resize: none;
+}
+
+.task-note-title {
+	font-weight: bolder;
+	font-size: 1em;
+}
+
+.task-note-result {
+	font-weight: normal;
+	font-size: 0.8em;
+}
+
+
+.task-filter-active {
+	
+}
+
+.task-filter-inactive {
+	
+}
+
+
+.task-note {
+	position: absolute;
+	box-shadow: 0px 0px 5px 2px #888888;
+	background: #ffff88; /* Old browsers */
+	background: -moz-linear-gradient(top, #ffff88 72%, #ffff88 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(72%, #ffff88),
+		color-stop(100%, #ffff88)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffff88 72%, #ffff88 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffff88 72%, #ffff88 100%);
+	/* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #ffff88 72%, #ffff88 100%);
+	/* IE10+ */
+	background: linear-gradient(to bottom, #ffff88 72%, #ffff88 100%);
+	/* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr='#ffff88',
+		endColorstr='#ffff88', GradientType=0); /* IE6-9 */
+}
+
+.task-note-header {
+	background: #f2f294;
+}
+.task-note-footer {
+	
+}
+
+.task-note-ui-cancel {
+	position: 	relative;
+}
+.task-note-ui-cancel span{
+	float: right;
+	
+}
