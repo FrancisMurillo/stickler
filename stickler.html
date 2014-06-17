@@ -55,14 +55,21 @@
 				append: '' ,
 				callback: function() {
 					var $myNote = $(this).parents('.note-task');
-					var $myChildren = $myNote.children();
 					
-					var $myHeader = $($myChildren.get(0));
-					var $mySection =  $($myChildren.get(1));
-					var $myFooter =  $($myChildren.get(2));
+					var getTotalHeight = function($arr) {
+						var height = 0;
+						$arr.each(function(index , elem) {
+							height += $(elem).height();
+						});
+						return height;
+					}
+					
+					var header = getTotalHeight($myNote.children('.note-header'));
+					var body =  getTotalHeight($myNote.children('.note-body'));
+					var footer = getTotalHeight($myNote.children('.note-footer'));
 
 					$myNote.css({
-						'height' : $myHeader.height() + $mySection.height() + $myFooter.height()
+						'height' : header + body + footer
 					});
 				}
 			});		
