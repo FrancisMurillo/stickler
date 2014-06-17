@@ -10,7 +10,8 @@
 
 <script src='js/jquery.topzindex.min.js'></script>
 <script src='js/jquery.autosize.min.js'></script>
-<script src="js/jquery.timeago.min.js" type="text/javascript"></script>
+<script src="js/jquery.timeago.min.js"></script>
+<script src="js/mustache.min.js"></script>
 
 <script src='js/note.js'></script>
 
@@ -70,14 +71,17 @@
 				var $section = $(this).closest('.note-task-subtask');
 				var $list = $section.find('.subtask-list');
 				
-				var html = "<li class='subtask'>  \
+				var view = "<li class='subtask'>  \
 								<div class='subtask-content' > \
 									<input type='checkbox'/> \
 									<textarea placeholder='<Your subtask>'></textarea> \
 								</div> \
-								<div class='timeago' title='June 17 , 2014' /> \
+								<div class='timeago' title='{{time_created}}' /> \
 							</li>";
-				var $task = $(html);
+				var data  = {
+					time_created : new Date().toISOString()
+				};
+				var $task = $(Mustache.render(view , data));
 				
 				$task.find('.timeago').timeago();
 				$task.find('textarea').resize({
@@ -107,11 +111,11 @@
 					<a	class='note-header-cancel'><span class='ui-icon ui-icon-close'></span></a>
 					<span class='timeago' title='June 17 , 2014'></span>
 				</header>
-				<section class='note-main note-task-main'>
+				<section class='note-body note-main note-task-main'>
 					<textarea class='note-task-title' placeholder='<Your Note Title>'></textarea>
 					<textarea class='note-task-result' placeholder='<Your Task Result>'></textarea>
 				</section>
-				<section class='note-task-subtask'>
+				<section class='note-body note-task-subtask'>
 					<header class='note-task-subtask-group'>
 						<a class='note-task-subtask-add'><span class='ui-icon ui-icon-plus'></span></a>
 						<span class='note-task-subtask-title'>Subtasks</span>
