@@ -39,8 +39,8 @@
 			$('#sticky').draggable();
 			$('#sticky').resizable({
 				handle : 'n,s,e,w,ne,se,sw,nw' , 
-				minWidth: NOTE_WIDTH , 
-				minHeight: NOTE_HEIGHT
+				minWidth: 100 , 
+				minHeight: 100 
 			});
 			$('#sticky').css({
 					'width' 	: 	toPx(NOTE_WIDTH) 	, 
@@ -53,17 +53,39 @@
 			$('textarea').autosize({
 				append: '' ,
 				callback: function() {
-					var $myNote = $(this).parents('.task-note');
+					var $myNote = $(this).parents('.note-task');
+					var $myChildren = $myNote.children();
 					
-					var $myHeader = $($myNote.children().get(0));
-					var $mySection = $($myNote.children().get(1));
-					var $myFooter = $($myNote.children().get(2));
+					var $myHeader = $($myChildren.get(0));
+					var $mySection =  $($myChildren.get(1));
+					var $myFooter =  $($myChildren.get(2));
 
 					$myNote.css({
 						'height' : $myHeader.height() + $mySection.height() + $myFooter.height()
 					});
 				}
 			});		
+			
+			$('.note-task-subtask-add').on('click.add' , function(e) {
+				var $section = $(this).closest('.note-task-subtask');
+				var $list = $section.find('.subtask-list');
+				
+				var html = "<li class='subtask'>  \
+								<div class='subtask-content' > \
+									<input type='checkbox'/> \
+									<textarea placeholder='<Your subtask>'></textarea> \
+								</div> \
+								<div class='timeago' title='June 17 , 2014' /> \
+							</li>";
+				var $task = $(html);
+				
+				$task.find('.timeago').timeago();
+				$task.find('textarea').resize({
+					append: '' 
+				});
+				
+				$list.append($task);
+			});
 		
 		});
 	</script>
@@ -80,19 +102,35 @@
 			<a id='add_note' href='#'>Roar</a>
 		</div>
 		<div id='note_area'>
-			<div id='sticky' class='task-note' title='June 17 , 2014'>
-				<header class='task-note-header'>
-					<b>...</b>
-					<a	class='task-note-ui-cancel'><span class='ui-icon ui-icon-close'></span></a>
+			<div id='sticky' class='note note-task' title='June 17 , 2014'>
+				<header class='note-header note-task-header'>
+					<a	class='note-header-cancel'><span class='ui-icon ui-icon-close'></span></a>
 					<span class='timeago' title='June 17 , 2014'></span>
 				</header>
-				<section class='task-note-main'>
-					<textarea class='task-note-title' placeholder='<Your Note Title>'></textarea>
-					<textarea class='task-note-result' placeholder='<Your Task Result>'></textarea>
+				<section class='note-main note-task-main'>
+					<textarea class='note-task-title' placeholder='<Your Note Title>'></textarea>
+					<textarea class='note-task-result' placeholder='<Your Task Result>'></textarea>
 				</section>
-				<footer class='task-note-subtask'>
-					<header>No Subtasks</header>
-					<section class='task-note-subtasks'></section>
+				<section class='note-task-subtask'>
+					<header class='note-task-subtask-group'>
+						<a class='note-task-subtask-add'><span class='ui-icon ui-icon-plus'></span></a>
+						<span class='note-task-subtask-title'>Subtasks</span>
+						<a class='note-task-subtask-collapse'><span class='ui-icon ui-icon-triangle-1-s'></span></a>	
+						<a class='note-task-subtask-checked'><span class='ui-icon ui-icon-check'></span></a>
+					</header>
+					<section class='note-task-subtasks'>
+						<ul class='subtask-list'>
+							<li class='subtask'>
+								<div class='subtask-content' >
+									<input type='checkbox'/>
+									<textarea placeholder='<Your subtask>'></textarea>
+								</div>
+								<div class='timeago' title='June 17 , 2014' />
+							</li>
+						</ul>
+					</section>
+				</section>
+				<footer class='note-footer'>
 				</footer>
 			</div>
 		</div>
