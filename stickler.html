@@ -11,6 +11,7 @@
 <script src='js/jquery.topzindex.min.js'></script>
 <script src='js/jquery.autosize.min.js'></script>
 <script src="js/jquery.timeago.min.js"></script>
+<script src="js/jquery.collapse.all.min.js"></script>
 <script src="js/mustache.min.js"></script>
 
 <script src='js/note.js'></script>
@@ -34,7 +35,7 @@
 			var NOTE_HEIGHT = 250;
 		
 			$('#add_note').on('click.add' , function() {
-				createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note_area') ,'task-note');
+				createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note_area') ,'note-task');
 			});
 			
 			$('#sticky').draggable();
@@ -129,7 +130,7 @@
 						<a class='note-task-subtask-collapse'><span class='ui-icon ui-icon-triangle-1-s'></span></a>	
 						<a class='note-task-subtask-checked'><span class='ui-icon ui-icon-check'></span></a>
 					</header>
-					<section class='note-task-subtasks'>
+					<section class='note-task-subtasks' data-collapse>
 						<ul class='subtask-list'>
 							<li class='subtask'>
 								<div class='subtask-content' >

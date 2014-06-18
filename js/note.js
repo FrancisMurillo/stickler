@@ -2,7 +2,7 @@
 function createNewNote(width , height , target_elem , note_class) {	
 	var noteHTML = "<div></div>";
 	var $newNote = $(noteHTML, {
-						'class'	:	note_class	,
+						'class'	:	note_class	+ ' ' + 'note',
 						'text'	:	'Hello'		,
 						'on'	:	{
 							'click'	:	function() { // Raise the clicked note to view
