@@ -60,6 +60,18 @@ function createNewNote(width , height , target_elem , note_class) {
 		$list.append($task);
 		fitNoteHeight($section.closest('.note'));
 	});
+	
+	$newNote.find('.note-header-cancel').on('click.remove', function() {
+		var $note = $(this).closest('.note');
+		
+		var noteTitle = $note.find('.note-task-title').val();
+		
+		if (!confirm('Are you sure you want to delete this <'+ noteTitle+'> note?')) 
+			return;
+		
+		var noteID = $note.attr('id');	
+		$('#' + noteID).remove();
+	});
 
 	$newNote.appendTo($(target_elem));	
 	$newNote.draggable({
