@@ -172,6 +172,10 @@ body {
 	font-size: 0.8em;
 }
 
+
+.note-task-subtask-group {
+	background: #e9e99d;
+}
 .note-task-subtask-add span {
 	float: left;
 }

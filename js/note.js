@@ -14,7 +14,7 @@ function createNewNote(width , height , target_elem , note_class) {
 					<header class='note-task-subtask-group'>\
 						<a class='note-task-subtask-add'><span class='ui-icon ui-icon-plus'></span></a>\
 						<span class='note-task-subtask-title'>Subtasks</span>\
-						<a class='note-task-subtask-collapse'><span class='ui-icon ui-icon-triangle-1-s'></span></a>\
+						<a class='note-task-subtask-collapse'><span class='ui-icon ui-icon-triangle-1-n'></span></a>\
 						<a class='note-task-subtask-checked'><span class='ui-icon ui-icon-check'></span></a>\
 					</header>\
 					<section class='note-task-subtasks'>\
@@ -71,6 +71,21 @@ function createNewNote(width , height , target_elem , note_class) {
 		
 		var noteID = $note.attr('id');	
 		$('#' + noteID).remove();
+	});
+	
+	$newNote.find('.note-task-subtask-collapse').on('click.collapse', function() {
+		var $note = $(this).closest('.note');
+		var $collapse = $note.find('.note-task-subtasks');
+		var $icon = $(this).find('span');
+		if ($icon.hasClass('ui-icon ui-icon-triangle-1-n')) {
+			$icon.removeClass('ui-icon ui-icon-triangle-1-n').addClass('ui-icon ui-icon-triangle-1-s');
+		} else if ($icon.hasClass('ui-icon ui-icon-triangle-1-s')) {
+			$icon.removeClass('ui-icon ui-icon-triangle-1-s').addClass('ui-icon ui-icon-triangle-1-n');
+		}
+		
+		$collapse.toggle(125 , function() {
+			fitNoteHeight($note);
+		});
 	});
 
 	$newNote.appendTo($(target_elem));	
