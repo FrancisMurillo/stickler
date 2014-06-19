@@ -79,12 +79,12 @@
 				var $section = $(this).closest('.note-task-subtask');
 				var $list = $section.find('.subtask-list');
 				
-				var view = "<li class='subtask'>  \
-								<div class='subtask-content' > \
-									<input type='checkbox'/> \
-									<textarea placeholder='<Your subtask>'></textarea> \
-								</div> \
-								<div class='timeago' title='{{time_created}}' /> \
+				var view = "<li class='subtask'> \
+								<div class='subtask-content' >\
+									<input type='checkbox'/>\
+									<textarea placeholder='<Your subtask>'></textarea>\
+									</div>\
+								<div class='timeago' title='{{time_created}}' />\
 							</li>";
 				var data  = {
 					time_created : new Date().toISOString()
