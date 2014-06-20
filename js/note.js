@@ -77,15 +77,29 @@ function createNewNote(width , height , target_elem , note_class) {
 		var $note = $(this).closest('.note');
 		var $collapse = $note.find('.note-task-subtasks');
 		var $icon = $(this).find('span');
-		if ($icon.hasClass('ui-icon ui-icon-triangle-1-n')) {
-			$icon.removeClass('ui-icon ui-icon-triangle-1-n').addClass('ui-icon ui-icon-triangle-1-s');
-		} else if ($icon.hasClass('ui-icon ui-icon-triangle-1-s')) {
-			$icon.removeClass('ui-icon ui-icon-triangle-1-s').addClass('ui-icon ui-icon-triangle-1-n');
-		}
+		
+		$icon.toggleClass('ui-icon-triangle-1-n').toggleClass('ui-icon-triangle-1-s');
 		
 		$collapse.toggle(125 , function() {
 			fitNoteHeight($note);
 		});
+	});
+	
+	$newNote.find('.note-task-subtask-checked').on('click.check', function() {
+		var $note = $(this).closest('.note');
+		var $subtasks = $note.find('.note-task-subtasks');
+		var $icon = $(this).find('span');
+		
+		$icon.toggleClass('ui-icon-check').toggleClass('ui-icon-circle-check');
+		
+		$subtasks.find('li').each(function(idx , el) {
+			var hasChecked = $(el).find('input:checked').length
+			if (hasChecked == 1) 
+				$(el).toggle(125 , function() {
+					fitNoteHeight($note);
+				});
+		});
+		
 	});
 
 	$newNote.appendTo($(target_elem));	

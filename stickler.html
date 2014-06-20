@@ -5,6 +5,8 @@
 <link href='css/jquery-ui-1.10.4.custom.min.css' rel='stylesheet' />
 <link href='css/stickler.css' rel='stylesheet' />
 
+<link href='lib/font-awesome-4.1.0/css/font-awesome.min.css' rel='stylesheet' />
+
 <script src='js/jquery-2.1.1.min.js'></script>
 <script src='js/jquery-ui-1.10.4.custom.min.js'></script>
 
@@ -34,8 +36,43 @@
 			var NOTE_WIDTH = 200;
 			var NOTE_HEIGHT = 250;
 		
-			$('#add_note').on('click.add' , function() {
+			$('#add-note').on('click.add' , function() {
 				createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note_area') ,'note-task');
+			});
+			
+			$('#save-notes').on('click.save' , function() {
+				var notes = [];
+				$('.note').each(function(idx , el) {
+					var note = {};
+					var $note = $(el);
+					
+					var id = $note.attr('id');
+					var x = $note.position().left;
+					var y = $note.position().top;
+					var width = $note.width();
+					var height = $note.height();
+
+					note = {
+							id		:	id		 , 
+							x 		:	x	,
+							y		:	y	,
+							width	:	width	,
+							height	:	height
+						}
+						
+					var noteType = 'NA';
+					if ($note.hasClass('note-task')) {
+						noteType = 'note-task'
+						
+						var noteTitle = $note.find('.note-task-title').val();
+						var noteResult = $note.find('.note-task-result').val();
+						
+						
+					} 
+					
+					notes.push(note);
+				});
+				console.log(JSON.stringify(notes));
 			});
 			
 			$('#sticky').draggable();
@@ -111,7 +148,8 @@
 					class='task-filter-rightmost' href='#'>Issues</a>
 			</section>
 
-			<a id='add_note' href='#'>Roar</a>
+			<a id='add-note' href='#'><i class='fa fa-plus fa-2x'></i></a>
+			<a id='save-notes' href='#'><i class='fa fa-floppy-o fa-2x'></i></a>
 		</div>
 		<div id='note_area'>
 			<div id='sticky' class='note note-task' title='June 17 , 2014'>
