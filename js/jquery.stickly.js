@@ -110,5 +110,84 @@
 
 // Task Note plugin
 (function($) {
+	$.fn.noteTask = function() {
+		var $note = $(this);
+		
+		// Fits a note height to it's current content
+		var fitNoteHeight = function() {
+			var getTotalHeight = function($arr) {
+				var height = 0;
+				$arr.each(function(index , elem) {
+					height += $(elem).height();
+				});
+				return height;
+			}
+							
+			var header = getTotalHeight($note.children('.note-header'));
+			var body =  getTotalHeight($note.children('.note-body'));
+			var footer = getTotalHeight($note.children('.note-footer'));
 
+			$note.css({
+				'height' : header + body + footer
+			});
+		}
+		
+		
+		$note.find('.note-task-subtask-add').on('click.addsubtask', function() {
+			var $section = $(this).closest('.note-task-subtask');
+			var $notask = $section.find('.subtask-notask');
+			$notask.hide();
+			
+			var $list = $section.find('.subtask-list');
+					
+			var taskTemplate = "\
+						<li class='subtask'> \
+							<div class='subtask-content' >\
+								<input type='checkbox'/>\
+								<textarea placeholder='<Your subtask>'></textarea>\
+								</div>\
+							<div class='timeago' title='{{subtaskDate}}' />\
+						</li>";
+			var	$task = $(Mustache.render(taskTemplate , {
+				subtaskDate : new Date().toISOString()
+			}));
+			
+			$task.find('.timeago').timeago();
+			$task.find('textarea').resize({
+				append: '' 
+			});
+			
+			$list.append($task);
+			fitNoteHeight($section.closest('.note'));
+		});
+		
+		$note.find('.note-task-subtask-collapse').on('click.collapse', function() {
+			var $collapse = $note.find('.note-task-subtasks');
+			var $icon = $(this).find('span');
+			
+			$icon.toggleClass('ui-icon-triangle-1-n').toggleClass('ui-icon-triangle-1-s');
+			
+			$collapse.toggle(125 , function() {
+				fitNoteHeight($note);
+			});
+		});
+		
+		$note.find('.note-task-subtask-checked').on('click.check', function() {
+			var $subtasks = $note.find('.note-task-subtasks');
+			var $icon = $(this).find('span');
+			
+			$icon.toggleClass('ui-icon-check').toggleClass('ui-icon-circle-check');
+			
+			$subtasks.find('li').each(function(idx , el) {
+				var hasChecked = $(el).find('input:checked').length
+				if (hasChecked == 1) 
+					$(el).toggle(125 , function() {
+						fitNoteHeight($note);
+					});
+			});
+		
+		return $note;
+		});
+	}
+	
 }(jQuery));
