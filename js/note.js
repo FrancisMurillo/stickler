@@ -30,9 +30,11 @@ function createNewNote(width , height , target_elem , note_class) {
 		noteID: 'note-task-' +  Date.now().toString() , //Cheap ID
 		noteDate: new Date().toISOString()
 	}));
+	/*
 	$newNote.on('click.raise' , function() {
 		$(this).css('z-index' , nextZIndex(note_class));
 	});
+	*/
 	$newNote.find('.note-task-subtask-add').on('click.addsubtask', function() {
 		var $section = $(this).closest('.note-task-subtask');
 		var $notask = $section.find('.subtask-notask');
@@ -61,6 +63,7 @@ function createNewNote(width , height , target_elem , note_class) {
 		fitNoteHeight($section.closest('.note'));
 	});
 	
+	/*
 	$newNote.find('.note-header-cancel').on('click.remove', function() {
 		var $note = $(this).closest('.note');
 		
@@ -72,6 +75,8 @@ function createNewNote(width , height , target_elem , note_class) {
 		var noteID = $note.attr('id');	
 		$('#' + noteID).remove();
 	});
+	*/
+	
 	
 	$newNote.find('.note-task-subtask-collapse').on('click.collapse', function() {
 		var $note = $(this).closest('.note');
@@ -102,6 +107,7 @@ function createNewNote(width , height , target_elem , note_class) {
 		
 	});
 
+	/*
 	$newNote.appendTo($(target_elem));	
 	$newNote.draggable({
 		containment:'parent' , 
@@ -132,6 +138,8 @@ function createNewNote(width , height , target_elem , note_class) {
 		'zIndex'	:	nextZIndex(note_class)
 	});
 	fitNoteHeight($newNote);
+	*/
+	$newNote.stickler();
 }
 
 function nextZIndex(note_class) {
@@ -141,8 +149,7 @@ function nextZIndex(note_class) {
 function randomNoteX(width , containerWidth) {
 	return	( Math.random() * (containerWidth - 2 *  width)).toFixed();
 }
-
-/* Generates a random Y coordinate for a note, see randomNoteX() */ 	
+	
 function randomNoteY(height , containerHeight) {
 	return ( Math.random() * (containerHeight - 2 *  height)).toFixed();
 }

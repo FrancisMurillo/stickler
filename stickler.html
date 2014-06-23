@@ -16,19 +16,8 @@
 <script src="js/jquery.collapse.all.min.js"></script>
 <script src="js/mustache.min.js"></script>
 
+<script src='js/jquery.stickly.js'></script>
 <script src='js/note.js'></script>
-
-<!--  Custom Functions -->
-<script>
-	function uniqId() {
-	  	return Math.round(new Date().getTime() + (Math.random() * 100));
-	}
-	/* Returns a number to a string with px on it. Eg toPx(300) = 300px */
-	function toPx(unit) {
-		return unit + 'px';
-	}
-
-</script>
 
 <!-- Main Logic -->
 <script type='text/javascript'>
@@ -37,7 +26,7 @@
 			var NOTE_HEIGHT = 250;
 		
 			$('#add-note').on('click.add' , function() {
-				createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note_area') ,'note-task');
+				createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note-area') ,'note-task');
 			});
 			
 			$('#save-notes').on('click.save' , function() {
@@ -151,7 +140,7 @@
 			<a id='add-note' href='#'><i class='fa fa-plus fa-2x'></i></a>
 			<a id='save-notes' href='#'><i class='fa fa-floppy-o fa-2x'></i></a>
 		</div>
-		<div id='note_area'>
+		<div id='note-area'>
 			<div id='sticky' class='note note-task' title='June 17 , 2014'>
 				<header class='note-header note-task-header'>
 					<a	class='note-header-cancel'><span class='ui-icon ui-icon-close'></span></a>
