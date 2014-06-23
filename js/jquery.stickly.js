@@ -1,7 +1,7 @@
 // Basic Stickler Note plugin
 (function($) {
-	$.fn.stickler = function() {
-		var opts = $.fn.stickler.defaults;
+	$.fn.stickler = function(options) {
+		var opts = $.extend( {} , $.fn.stickler.defaults , options );
 		
 		var $note = $(this);		
 		$note.appendTo('#' + opts.noteArea);
