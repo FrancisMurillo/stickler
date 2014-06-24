@@ -70,6 +70,11 @@
 				fitNoteHeight();
 			}
 		});
+		// Autoupdate HTML on change, needed for OuterHTML save
+		$note.find('textarea').on('change.update' ,function(e){
+			var $text = $(this);
+			$text.html($text.val());
+		});
 		
 		// Place note in area randomly
 		var $area = $('#' + opts.noteArea);
