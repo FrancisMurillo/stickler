@@ -14,6 +14,7 @@
 <script src='js/jquery.autosize.min.js'></script>
 <script src="js/jquery.timeago.min.js"></script>
 <script src="js/jquery.collapse.all.min.js"></script>
+<script src="js/outerHTML-2.1.0-min.js"></script>
 <script src="js/mustache.min.js"></script>
 
 <script src='js/jquery.stickly.js'></script>
@@ -25,104 +26,14 @@
 			var NOTE_WIDTH = 200;
 			var NOTE_HEIGHT = 250;
 		
+			loadSticklers();
+		
 			$('#add-note').on('click.add' , function() {
 				createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note-area') ,'note-task');
 			});
 			
 			$('#save-notes').on('click.save' , function() {
-				var notes = [];
-				$('.note').each(function(idx , el) {
-					var note = {};
-					var $note = $(el);
-					
-					var id = $note.attr('id');
-					var x = $note.position().left;
-					var y = $note.position().top;
-					var width = $note.width();
-					var height = $note.height();
-
-					note = {
-							id		:	id		 , 
-							x 		:	x	,
-							y		:	y	,
-							width	:	width	,
-							height	:	height
-						}
-						
-					var noteType = 'NA';
-					if ($note.hasClass('note-task')) {
-						noteType = 'note-task'
-						
-						var noteTitle = $note.find('.note-task-title').val();
-						var noteResult = $note.find('.note-task-result').val();
-						
-						
-					} 
-					
-					notes.push(note);
-				});
-				console.log(JSON.stringify(notes));
-			});
-			
-			$('#sticky').draggable();
-			$('#sticky').resizable({
-				handle : 'n,s,e,w,ne,se,sw,nw' , 
-				minWidth: 100 , 
-				minHeight: 100 
-			});
-			$('#sticky').css({
-					'width' 	: 	'250px' 	, 
-					'height'	: 	'200px'	,
-					
-					'zIndex'	:	$.topZIndex('.task-note') + 1	
-				});
-			$('.timeago').timeago();
-				
-			$('textarea').autosize({
-				append: '' ,
-				callback: function() {
-					var $myNote = $(this).parents('.note-task');
-					
-					var getTotalHeight = function($arr) {
-						var height = 0;
-						$arr.each(function(index , elem) {
-							height += $(elem).height();
-						});
-						return height;
-					}
-					
-					var header = getTotalHeight($myNote.children('.note-header'));
-					var body =  getTotalHeight($myNote.children('.note-body'));
-					var footer = getTotalHeight($myNote.children('.note-footer'));
-
-					$myNote.css({
-						'height' : header + body + footer
-					});
-				}
-			});		
-			
-			$('.note-task-subtask-add').on('click.add' , function(e) {
-				var $section = $(this).closest('.note-task-subtask');
-				var $list = $section.find('.subtask-list');
-				
-				var view = "<li class='subtask'> \
-								<div class='subtask-content' >\
-									<input type='checkbox'/>\
-									<textarea placeholder='<Your subtask>'></textarea>\
-									</div>\
-								<div class='timeago' title='{{time_created}}' />\
-							</li>";
-				var data  = {
-					time_created : new Date().toISOString()
-				};
-				var $task = $(Mustache.render(view , data));
-				
-				$task.find('.timeago').timeago();
-				$task.find('textarea').resize({
-					append: '' 
-				});
-				
-				$list.append($task);
+				saveSticklers();
 			});
 		
 		});
@@ -141,37 +52,6 @@
 			<a id='save-notes' href='#'><i class='fa fa-floppy-o fa-2x'></i></a>
 		</div>
 		<div id='note-area'>
-			<div id='sticky' class='note note-task' title='June 17 , 2014'>
-				<header class='note-header note-task-header'>
-					<a	class='note-header-cancel'><span class='ui-icon ui-icon-close'></span></a>
-					<span class='timeago' title='June 17 , 2014'></span>
-				</header>
-				<section class='note-body note-main note-task-main'>
-					<textarea class='note-task-title' placeholder='<Your Note Title>'></textarea>
-					<textarea class='note-task-result' placeholder='<Your Task Result>'></textarea>
-				</section>
-				<section class='note-body note-task-subtask'>
-					<header class='note-task-subtask-group'>
-						<a class='note-task-subtask-add'><span class='ui-icon ui-icon-plus'></span></a>
-						<span class='note-task-subtask-title'>Subtasks</span>
-						<a class='note-task-subtask-collapse'><span class='ui-icon ui-icon-triangle-1-s'></span></a>	
-						<a class='note-task-subtask-checked'><span class='ui-icon ui-icon-check'></span></a>
-					</header>
-					<section class='note-task-subtasks' data-collapse>
-						<ul class='subtask-list'>
-							<li class='subtask'>
-								<div class='subtask-content' >
-									<input type='checkbox'/>
-									<textarea placeholder='<Your subtask>'></textarea>
-								</div>
-								<div class='timeago' title='June 17 , 2014' />
-							</li>
-						</ul>
-					</section>
-				</section>
-				<footer class='note-footer'>
-				</footer>
-			</div>
 		</div>
 	</div>
 </body>

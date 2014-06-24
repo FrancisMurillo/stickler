@@ -31,7 +31,59 @@ function createNewNote(width , height , target_elem , note_class) {
 		noteDate: new Date().toISOString()
 	}));
 
-	$newNote.stickler().noteTask();
+	$newNote.stickler().sticklerTask();
+}
+
+function saveSticklers() {
+	var noteArea = $.fn.stickler.defaults.noteArea;
+	var $noteArea = $('#' + noteArea);
+	
+	var noteClass = $.fn.stickler.defaults.noteClass;
+	
+	var notes = [];
+	var noteClasses = [
+						$.fn.stickler.defaults.noteHeaderClass , 
+						$.fn.stickler.defaults.noteBodyClass , 
+						$.fn.stickler.defaults.noteFooterClass 
+						];
+	var noteClassesSelector = $.map(noteClasses , function(item) {return '.' + item}).join(',');
+	$noteArea.find('.' + noteClass).each(function(idx, elem) {
+		var $cloned = $(elem).clone();
+		$cloned.children(':not('+ noteClassesSelector+')').remove();
+		notes.push($cloned);
+	});
+	
+	var notesJSON = JSON.stringify(
+						$.map(notes , function(item) {return item.outerHTML()})
+						);
+	localStorage.setItem('stickler__notes' ,notesJSON);
+	alert('Sticklers Saved');
+}
+
+/* Load Sticklers */
+function loadSticklers() {
+	var noteArea = $.fn.stickler.defaults.noteArea;
+	var noteClass = $.fn.stickler.defaults.noteClass;
+
+	// Load sticklers
+	var sticklers = $.map(JSON.parse(localStorage.getItem('stickler__notes')) , function(item){return $(item);})
+	$.each(sticklers , function(idx , val){
+		var $stickler = val;
+		$('#' + noteArea).append($stickler);
+	});
+	
+	// Attach functionality to notes
+	
+	var taskClass = $.fn.sticklerTask.defaults.sticklerClass;
+	$('#' + noteArea).find('.' + noteClass).each(function(idx , elem) {
+		var $note = $(elem);
+		
+		$note.stickler();
+		if ($note.hasClass(taskClass)) 
+			$note.sticklerTask();
+		
+	});
+	
 }
 
 function nextZIndex(note_class) {

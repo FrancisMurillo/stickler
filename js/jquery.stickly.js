@@ -91,6 +91,10 @@
 		noteClass	: 'note' , 
 		noteArea	: 'note-area' ,
 		
+		noteHeaderClass	:	'note-header' , 
+		noteBodyClass	:	'note-body' , 
+		noteFooterClass	:	'note-footer' , 
+		
 		// Units in px
 		noteWidth		: 200 ,
 		noteMinWidth	: 150 ,
@@ -110,7 +114,7 @@
 
 // Task Note plugin
 (function($) {
-	$.fn.noteTask = function() {
+	$.fn.sticklerTask = function() {
 		var $note = $(this);
 		
 		// Fits a note height to it's current content
@@ -189,5 +193,7 @@
 		return $note;
 		});
 	}
-	
+	$.fn.sticklerTask.defaults = {
+		sticklerClass	: 'note-task'
+	}
 }(jQuery));
