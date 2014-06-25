@@ -1,6 +1,7 @@
 // Basic Stickler Note plugin
 (function($) {
-	$.fn.stickler = function(options) {
+	$.fn.stickler = function(options , recreate) {
+		recreate = typeof(recreate) !== 'undefined' ? recreate : true
 		var opts = $.extend( {} , $.fn.stickler.defaults , options );
 		
 		var $note = $(this);		
@@ -17,8 +18,7 @@
 		}
 		
 		// Fits a note height to it's current content
-		var fitNoteHeight = function() {
-
+		var getNoteHeight = function() {
 			var getTotalHeight = function($arr) {
 				var height = 0;
 				$arr.each(function(index , elem) {
@@ -29,10 +29,14 @@
 							
 			var header = getTotalHeight($note.children('.note-header'));
 			var body =  getTotalHeight($note.children('.note-body'));
-			var footer = getTotalHeight($note.children('.note-footer'));
-
+			var footer = getTotalHeight($note.children('.note-footer'));	
+			
+			return header + body + footer;
+		}
+		
+		var fitNoteHeight = function() {
 			$note.css({
-				'height' : header + body + footer
+				'height' :getNoteHeight()
 			});
 		}
 		
@@ -58,7 +62,10 @@
 		// Note resize
 		$note.resizable({
 			minWidth: opts.noteMinWidth , 
-			minHeight: opts.noteMinHeight
+			minHeight: opts.noteMinHeight , 
+			start : function(ev , ui) {
+				$note.resizable('option' , 'minHeight' , getNoteHeight());
+			}
 		});
 		
 		// Relative time 
@@ -78,16 +85,18 @@
 		
 		// Place note in area randomly
 		var $area = $('#' + opts.noteArea);
-		$note.css({			
-			'width' 	: 	toPx(opts.noteWidth) 	, 
-			'height'	: 	toPx(opts.noteHeight)	,
+		if (recreate) {
+			$note.css({			
+				'width' 	: 	toPx(opts.noteWidth) 	, 
+				'height'	: 	toPx(opts.noteHeight)	,
 			
-			'left'		:	toPx(randomPlacement(opts.noteWidth , $area.width()))	,
-			'top'		:	toPx(randomPlacement(opts.noteHeight , $area.height()))	,
+				'left'		:	toPx(randomPlacement(opts.noteWidth , $area.width()))	,
+				'top'		:	toPx(randomPlacement(opts.noteHeight , $area.height()))	,
 			
-			'zIndex'	:	nextZIndex()
-		});
-		fitNoteHeight(); // Fit for safety
+				'zIndex'	:	nextZIndex()
+		}	);
+			fitNoteHeight(); // Fit for safety
+		}
 		
 		return $note;
 		
@@ -141,7 +150,35 @@
 			});
 		}
 		
+		// Recreate subtask events
+		var attachSubtaskEvents = function($task) {
+			$task.find('.timeago').timeago();
+			$task.find('textarea').autosize({
+				append: '' 
+			});
+			$task.find('textarea').on('change.update' ,function(e){
+				var $text = $(this);
+				$text.html($text.val());
+			});
+			$task.find('input:checkbox').change(function() {
+				if ($(this).prop('checked')) {
+					$(this).addClass('checked');
+				} else {
+					$(this).removeClass('checked');
+				}
+			});
+			if ($task.find('input:checkbox').hasClass('checked')) {
+				$task.find('input:checkbox').prop('checked' , true);
+			}
+		}
+		var $tasks = $note.find('.subtask');
+		$tasks.each(function(idx , elem){
+			var $task = $(elem);
+			attachSubtaskEvents($task);
+		});
 		
+			
+		// Add subtask
 		$note.find('.note-task-subtask-add').on('click.addsubtask', function() {
 			var $section = $(this).closest('.note-task-subtask');
 			var $notask = $section.find('.subtask-notask');
@@ -161,12 +198,9 @@
 				subtaskDate : new Date().toISOString()
 			}));
 			
-			$task.find('.timeago').timeago();
-			$task.find('textarea').resize({
-				append: '' 
-			});
-			
 			$list.append($task);
+			attachSubtaskEvents($task);
+			
 			fitNoteHeight($section.closest('.note'));
 		});
 		
@@ -195,8 +229,10 @@
 					});
 			});
 		
-		return $note;
+			return $note;
 		});
+		
+		return $note;
 	}
 	$.fn.sticklerTask.defaults = {
 		sticklerClass	: 'note-task'

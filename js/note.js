@@ -73,12 +73,11 @@ function loadSticklers() {
 	});
 	
 	// Attach functionality to notes
-	
 	var taskClass = $.fn.sticklerTask.defaults.sticklerClass;
 	$('#' + noteArea).find('.' + noteClass).each(function(idx , elem) {
 		var $note = $(elem);
 		
-		$note.stickler();
+		$note.stickler({} , false);
 		if ($note.hasClass(taskClass)) 
 			$note.sticklerTask();
 		
