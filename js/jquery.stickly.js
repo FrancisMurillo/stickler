@@ -170,13 +170,16 @@
 				$task.find('.timeago').timeago('update' , new Date().toISOString());
 			});
 			
-			// Update checkbox for save as well
+			// Update checkbox for save and time as well
 			$task.find('input:checkbox').change(function() {
 				if ($(this).prop('checked')) {
 					$(this).addClass('checked');
 				} else {
 					$(this).removeClass('checked');
 				}
+				
+				$task.find('.timeago').timeago('update' , new Date().toISOString());
+				$task.closest('.note').find('.note-header .timeago').timeago('update' , new Date().toISOString());
 			});
 			if ($task.find('input:checkbox').hasClass('checked')) {
 				$task.find('input:checkbox').prop('checked' , true);
