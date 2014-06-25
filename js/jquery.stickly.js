@@ -77,6 +77,11 @@
 				fitNoteHeight();
 			}
 		});
+		// Update note relative time
+		$note.find('textarea').on('change.modify' , function() {
+			var $time = $note.find('.note-header .timeago');
+			$time.timeago('update' , new Date().toISOString());
+		});
 		// Autoupdate HTML on change, needed for OuterHTML save
 		$note.find('textarea').on('change.update' ,function(e){
 			var $text = $(this);
@@ -156,10 +161,16 @@
 			$task.find('textarea').autosize({
 				append: '' 
 			});
+			
+			// Update textarea for save and relative time
 			$task.find('textarea').on('change.update' ,function(e){
 				var $text = $(this);
 				$text.html($text.val());
+				
+				$task.find('.timeago').timeago('update' , new Date().toISOString());
 			});
+			
+			// Update checkbox for save as well
 			$task.find('input:checkbox').change(function() {
 				if ($(this).prop('checked')) {
 					$(this).addClass('checked');
@@ -170,6 +181,7 @@
 			if ($task.find('input:checkbox').hasClass('checked')) {
 				$task.find('input:checkbox').prop('checked' , true);
 			}
+			
 		}
 		var $tasks = $note.find('.subtask');
 		$tasks.each(function(idx , elem){
