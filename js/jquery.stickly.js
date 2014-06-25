@@ -129,10 +129,6 @@
 		return unit + 'px';
 	}
 	
-}(jQuery));
-
-// Task Note plugin
-(function($) {
 	$.fn.sticklerTask = function() {
 		var $note = $(this);
 		
