@@ -26,9 +26,7 @@
 		$(document).ready(function() {
 			var NOTE_WIDTH = 200;
 			var NOTE_HEIGHT = 250;
-		
-			loadSticklers();
-		
+			loadSticklers();	
 			$('#add-note').on('click.add' , function() {
 				createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note-area') ,'note-task');
 			});
@@ -42,14 +40,31 @@
 <body>
 	<div id='wrapper'>
 		<div id='action-area'>
-			<section id='action-area-types'>
+			<section id='option-area'>
+				<ul id='add-menu'>
+					<li style='display: inline;'><a id='add-note' href='#'><i class='fa fa-plus fa-2x'></i></a>
+						<ul>
+							<li style='background-color: yellow;'><a href='#'>Task</a></li>
+							<li style='background-color: green;'><a href='#'>Issue</a></li>
+						</ul>
+					</li>
+					<li><a id='save-notes' href='#'><i class='fa fa-floppy-o fa-2x'></i></a></li>
+				</ul>
+			</section>	
+		
+			<section id='action-area-types' '>
+				
+			</section>
+			
+			<section id='filter-area' >
+				<input type='text'/>
 				<a id='all-filter' class='task-filter-leftmost' href='#'>All</a> <a
 					id='task-filter' href='#'>Tasks</a> <a id='issue-filter'
 					class='task-filter-rightmost' href='#'>Issues</a>
 			</section>
-
-			<a id='add-note' href='#'><i class='fa fa-plus fa-2x'></i></a>
-			<a id='save-notes' href='#'><i class='fa fa-floppy-o fa-2x'></i></a>
+			
+			
+		
 		</div>
 		<div id='note-area'>
 		</div>

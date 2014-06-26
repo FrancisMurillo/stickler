@@ -15,6 +15,10 @@ body {
 	height: 100%;
 }
 
+a {
+	text-decoration: none;
+}
+
 #wrapper {
 	width: 100%;
 	height: 100%;
@@ -25,7 +29,7 @@ body {
 /* ------------------------------*/
 #action-area {
 	width: 100%;
-	height: 10%;
+	height: 7%;
 	background: #627d4d; /* Old browsers */
 	background: -moz-linear-gradient(top, #627d4d 0%, #1f3b08 100%);
 	/* FF3.6+ */
@@ -40,12 +44,55 @@ body {
 	background: linear-gradient(to bottom, #627d4d 0%, #1f3b08 100%);
 	/* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient(     startColorstr='#627d4d',
-		endColorstr='#1f3b08', GradientType=0); /* IE6-9 */
+		endColorstr='#1f3b08', GradientType=0); /* IE6-9 */		
+	position:	relative;
+	display:	inline-block;
+}
+
+#action-area section {
+	float: left;
+	
+	padding-left: 1.00em;
+}
+
+#option-area ul{
+	
+}
+
+#option-area ul li {
+	display:	inline;
+	position:	relative;	
+
+	padding-left: 0.50em;
+}
+#option-area li ul {
+	padding-top: 0.50em;
+	padding-left: 1.50em;
+	
+	height: 2em;
+	
+	border: 1pt solid red;
+}
+
+#option-area li:hover  > ul {
+	display:	block;
+}
+
+#option-area ul ul {
+	position: absolute;
+	display:	none;
+	
+	width:	20em;
+	height:	2em;	
+}
+
+#option-area ul ul li{
+	border:	1pt solid black;
+	width: 4.00em;
 }
 
 #action-area-types {
 	width: 30%;
-	display: inline-block;
 }
 
 #action-area-types a {

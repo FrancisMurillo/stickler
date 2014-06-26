@@ -1,5 +1,10 @@
 // Basic Stickler Note plugin
 (function($) {
+	$.fn.purifyStyle = function() {
+		var $note = $(this);
+		$note.find('*').each(function(idx, elem){$(elem).removeAttr('style');});
+	}
+
 	$.fn.stickler = function(options , recreate) {
 		recreate = typeof(recreate) !== 'undefined' ? recreate : true
 		var opts = $.extend( {} , $.fn.stickler.defaults , options );
@@ -164,6 +169,11 @@
 				$text.html($text.val());
 				
 				$task.find('.timeago').timeago('update' , new Date().toISOString());
+				
+				if ($text.val().length == 0) {
+					$task.remove();
+					fitNoteHeight($note);
+				}
 			});
 			
 			// Update checkbox for save and time as well
@@ -176,6 +186,11 @@
 				
 				$task.find('.timeago').timeago('update' , new Date().toISOString());
 				$task.closest('.note').find('.note-header .timeago').timeago('update' , new Date().toISOString());
+				
+				var $section = $task.closest('.note-task-subtask').find('.note-task-subtask-checked span');
+				if ($section.hasClass('ui-icon-circle-check')) {
+					$task.toggle(125 , function() {fitNoteHeight($note)});
+				}
 			});
 			if ($task.find('input:checkbox').hasClass('checked')) {
 				$task.find('input:checkbox').prop('checked' , true);
@@ -233,11 +248,12 @@
 			$icon.toggleClass('ui-icon-check').toggleClass('ui-icon-circle-check');
 			
 			$subtasks.find('li').each(function(idx , el) {
-				var hasChecked = $(el).find('input:checked').length
-				if (hasChecked == 1) 
+				var hasChecked = $(el).find('input:checked').prop('checked')
+				if (hasChecked ) {
 					$(el).toggle(125 , function() {
 						fitNoteHeight($note);
 					});
+				} 
 			});
 		
 			return $note;

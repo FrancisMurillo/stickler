@@ -19,6 +19,7 @@ function createNewNote(width , height , target_elem , note_class) {
 					</header>\
 					<section class='note-task-subtasks'>\
 						<span class='subtask-notask'>No subtasks</span>\
+						<span class='subtask-collapsed'># subtasks</span>\
 						<ul class='subtask-list'>\
 						</ul>\
 					</section>\
@@ -50,6 +51,7 @@ function saveSticklers() {
 	$noteArea.find('.' + noteClass).each(function(idx, elem) {
 		var $cloned = $(elem).clone();
 		$cloned.children(':not('+ noteClassesSelector+')').remove();
+		$cloned.purifyStyle();
 		notes.push($cloned);
 	});
 	
