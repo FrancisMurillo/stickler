@@ -108,6 +108,11 @@
 			fitNoteHeight(); // Fit for safety
 		}
 		
+		// Make sure the note is absolute in the area
+		$note.css({
+			'position' : 'absolute'
+		});
+		
 		return $note;
 		
 	}
