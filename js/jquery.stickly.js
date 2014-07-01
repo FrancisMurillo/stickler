@@ -235,6 +235,8 @@
 			fitNoteHeight($section.closest('.note'));
 		});
 		
+		// Collapse subtask
+		$note.find('.subtask-collapse').hide();
 		$note.find('.note-task-subtask-collapse').on('click.collapse', function() {
 			var $collapse = $note.find('.note-task-subtasks');
 			var $icon = $(this).find('span');
@@ -242,8 +244,17 @@
 			$icon.toggleClass('ui-icon-triangle-1-n').toggleClass('ui-icon-triangle-1-s');
 			
 			$collapse.toggle(125 , function() {
-				fitNoteHeight($note);
+				fitNoteHeight($note);			
 			});
+			
+			if ($icon.hasClass('ui-icon-triangle-1-n')) {
+				$note.find('.subtask-collapse').html('This is hidden').hide();
+			} else {
+				var $tasks = $note.find('input:checkbox');
+				var $unfinished = $note.find('input:checkbox:not(:checked)');
+				
+				$note.find('.subtask-collapse').html('Total tasks:' + $tasks.length + ';Open tasks:' + $unfinished.length).show();
+			}
 		});
 		
 		$note.find('.note-task-subtask-checked').on('click.check', function() {

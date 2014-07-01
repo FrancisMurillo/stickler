@@ -22,6 +22,9 @@ function createNewNote(width , height , target_elem , note_class) {
 						<ul class='subtask-list'>\
 						</ul>\
 					</section>\
+					<footer>\
+						<span class='subtask-collapse'># Task</span>\
+					</footer>\
 				</section>\
 				<footer class='note-footer'>\
 				</footer>\
@@ -66,7 +69,10 @@ function loadSticklers() {
 	var noteClass = $.fn.stickler.defaults.noteClass;
 
 	// Load sticklers
-	var sticklers = $.map(JSON.parse(localStorage.getItem('stickler__notes')) , function(item){return $(item);})
+	var data = localStorage.getItem('stickler__notes');
+	if (data == null ) return;
+	
+	var sticklers = $.map(JSON.parse(data) , function(item){return $(item);})
 	$.each(sticklers , function(idx , val){
 		var $stickler = val;
 		$('#' + noteArea).append($stickler);
