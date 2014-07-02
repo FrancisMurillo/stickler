@@ -139,7 +139,30 @@ function displayNotesRandomly() {
 	});
 }
 
+/* Shuffles an array randomly */
 function shuffle(o) {
 	for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
 	return o;
 };
+
+/* Filter notes by title */
+function filterNotes(title) {
+	var noteClass = $.fn.stickler.defaults.noteClass;
+	var noteArea = $.fn.stickler.defaults.noteArea;
+	var $area = $('#' + noteArea);
+	
+	if (title.length == 0) {
+		$area.find('.' + noteClass).each(function(idx , el) {
+			var $note = $(el);
+			$note.show();
+		});
+	} else {	
+		$area.find('.' + noteClass).each(function(idx , el) {
+			var $note = $(el);
+			$note.hide();
+			if ($note.find('.' + $.fn.sticklerTask.defaults.taskTitle ).val().indexOf(title) >= 0 ) {
+				$note.show();
+			}
+		});
+	}
+}

@@ -40,6 +40,14 @@
 			$('#slideshow-normal').on('click.slideshow' , function(){
 				displayNotesRandomly();
 			});
+			
+			$('#title-filter').on('change.filter' , function() {
+				filterNotes($(this).val());
+			});
+			
+			$('#title-filter').on('keyup.filter' , function() {
+				filterNotes($(this).val());
+			});
 		});
 </script>
 </head>
@@ -54,7 +62,7 @@
 			
 			<section id='filter-area' >
 				<a href='#'><i class='fa fa-filter fa-2x'></i></a>
-				<input type='text'/>
+				<input id='title-filter' type='text'/>
 				<a id='all-filter' class='task-filter-leftmost' href='#'>All</a> <a
 					id='task-filter' href='#'>Tasks</a> <a id='issue-filter'
 					class='task-filter-rightmost' href='#'>Issues</a>

@@ -286,16 +286,18 @@
 		return $note;
 	}
 	$.fn.sticklerTask.defaults = {
-		sticklerClass	: 'note-task'
+		sticklerClass	: 'note-task' ,
+		
+		taskTitle		: 'note-task-title'
 	}
 	
 	$.fn.popIn = function(delay , duration) {
 		var $note = $(this);
 		$note.hide();
-		$note.css('z-index' , nextZCoordinate($.fn.stickler.defaults.noteClass));
-		window.setTimeout(function() {
-			
+		window.setTimeout(function() {	
+			$note.css('z-index' , nextZCoordinate($.fn.stickler.defaults.noteClass));
 			$note.fadeIn(duration);
 		}, delay );
 	}
+	
 }(jQuery));
