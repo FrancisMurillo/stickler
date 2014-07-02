@@ -37,6 +37,7 @@ function createNewNote(width , height , target_elem , note_class) {
 	$newNote.stickler().sticklerTask();
 }
 
+/* Save Sticklers */
 function saveSticklers() {
 	var noteArea = $.fn.stickler.defaults.noteArea;
 	var $noteArea = $('#' + noteArea);
@@ -124,3 +125,21 @@ function fitNoteHeight($note) {
 	});
 }
 
+/* Display Notes As In Slideshow */
+function displayNotesRandomly() {
+	var areaClass = $.fn.stickler.defaults.noteArea;
+	var $area = $('#' + areaClass);
+	
+	var delay = 1000;
+	var ctr = 0;
+	shuffle($area.find('.note')).each(function(idx, el){
+		var $note = $(el);
+		$note.popIn(ctr , delay);
+		ctr += delay;
+	});
+}
+
+function shuffle(o) {
+	for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+	return o;
+};

@@ -36,8 +36,12 @@
 			$('#save-notes').on('click.save' , function() {
 				saveSticklers();
 			});		
+			
+			$('#slideshow-normal').on('click.slideshow' , function(){
+				displayNotesRandomly();
+			});
 		});
-	</script>
+</script>
 </head>
 <body>
 	<div id='wrapper'>
@@ -45,7 +49,7 @@
 			<section id='option-area'>
 					<a id='add-note' href='#'><i class='fa fa-plus fa-2x'></i></a>
 					<a id='save-notes' href='#'><i class='fa fa-floppy-o fa-2x'></i></a>
-					<a id='slideswhow-normal' href='#'><i class='fa fa-floppy-o fa-2x'></i></a>
+					<a id='slideshow-normal' href='#'><i class='fa fa-film fa-2x'></i></a>
 			</section>	
 			
 			<section id='filter-area' >

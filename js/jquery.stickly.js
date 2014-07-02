@@ -5,6 +5,10 @@
 		$note.find('*').each(function(idx, elem){$(elem).removeAttr('style');});
 	}
 
+	function nextZCoordinate(clazz) {
+		return $.topZIndex('.' + clazz) + 1;
+	}
+	
 	$.fn.stickler = function(options , recreate) {
 		recreate = typeof(recreate) !== 'undefined' ? recreate : true
 		var opts = $.extend( {} , $.fn.stickler.defaults , options );
@@ -14,7 +18,7 @@
 				
 		// Get the highest z-index in the area
 		var nextZIndex = function() {
-			return $.topZIndex('.' + opts.noteClass) + 1;
+			return nextZCoordinate(opts.noteClass);
 		}
 		
 		// Sends a note to the top of the pile
@@ -283,5 +287,15 @@
 	}
 	$.fn.sticklerTask.defaults = {
 		sticklerClass	: 'note-task'
+	}
+	
+	$.fn.popIn = function(delay , duration) {
+		var $note = $(this);
+		$note.hide();
+		$note.css('z-index' , nextZCoordinate($.fn.stickler.defaults.noteClass));
+		window.setTimeout(function() {
+			
+			$note.fadeIn(duration);
+		}, delay );
 	}
 }(jQuery));
