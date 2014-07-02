@@ -234,6 +234,7 @@ a, a:visited, a:hover, a:active {
 	list-style: none;
 }
 
+
 .note-task-subtasks li {
 	padding-left: 10px;
 	font-size: 0.80em;
@@ -245,8 +246,12 @@ a, a:visited, a:hover, a:active {
 	font-size: 0.70em;
 }
 
+.note-task-subtasks{
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
 .subtask-content input {
-	position: absolute;
 	float: left;
 }
 
@@ -255,6 +260,6 @@ a, a:visited, a:hover, a:active {
 	width: 75%;
 }
 
-:checked+textarea {
+.note :checked+textarea {
 	text-decoration: line-through;
 }

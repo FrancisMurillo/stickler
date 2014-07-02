@@ -104,7 +104,7 @@
 				'top'		:	toPx(randomPlacement(opts.noteHeight , $area.height()))	,
 			
 				'zIndex'	:	nextZIndex()
-		}	);
+			});
 			fitNoteHeight(); // Fit for safety
 		}
 		
@@ -157,7 +157,11 @@
 			var footer = getTotalHeight($note.children('.note-footer'));
 
 			$note.css({
-				'height' : header + body + footer
+				'height' : (header + body + footer) + 'px'
+			});
+			
+			$note.find('.subtask-list').css({
+				'max-height' : $('#' + $.fn.stickler.defaults.noteArea).height() / 2
 			});
 		}
 		
