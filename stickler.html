@@ -50,11 +50,16 @@
 			$('#title-filter').on('change.filter' , function() {
 				filterNotes($(this).val());
 			});
+		
 			
-			$('#title-filter').on('keyup.filter' , function() {
-				filterNotes($(this).val());
-			});
 		});
+		
+		document.addEventListener("keydown", function(e) {
+		  if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+			e.preventDefault();
+			saveSticklers();
+		  }
+		}, false);
 </script>
 </head>
 <body>
