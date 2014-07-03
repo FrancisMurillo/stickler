@@ -28,6 +28,24 @@ a, a:visited, a:hover, a:active {
 	height: 100%;
 }
 
+/* -------------------------*/
+/* ----->>> BUTTONS <<<-----*/
+/* -------------------------*/
+.my-btn {
+	width: 15% !important;
+}
+
+/* ------------------------------*/
+/* ----->>> OPTIONS AREA <<<-----*/
+/* ------------------------------*/
+#option-area {
+	display: inline-block;
+}
+
+#note-area {
+	height: 100%;
+}
+
 /* ------------------------------*/
 /* ----->>> ACTIONS AREA <<<-----*/
 /* ------------------------------*/
@@ -262,4 +280,11 @@ a, a:visited, a:hover, a:active {
 
 .note :checked+textarea {
 	text-decoration: line-through;
+}
+
+/* ---------------------------------*/
+/* ----->>> UI Mobile Icons <<<-----*/
+/* ---------------------------------*/
+.ui-icon-add:after {
+
 }
