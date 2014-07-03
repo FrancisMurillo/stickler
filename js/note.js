@@ -71,7 +71,7 @@ function loadSticklers() {
 
 	// Load sticklers
 	var data = localStorage.getItem('stickler__notes');
-	if (data == null ) return;
+	if (data == null || data == "" ) return;
 	
 	var sticklers = $.map(JSON.parse(data) , function(item){return $(item);})
 	$.each(sticklers , function(idx , val){
