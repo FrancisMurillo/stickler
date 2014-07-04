@@ -72,6 +72,8 @@ function loadSticklers() {
 	// Load sticklers
 	var data = localStorage.getItem('stickler__notes');
 	if (data == null || data == "" ) return;
+
+	$('#' + noteArea).html('');
 	
 	var sticklers = $.map(JSON.parse(data) , function(item){return $(item);})
 	$.each(sticklers , function(idx , val){
@@ -168,17 +170,34 @@ function filterNotes(title) {
 }
 
 /* Syncs notes to a web service */
-var url = 'http://francisavmurillo.pythonanywhere.com/stickler/notes/fmurillo/';
+var url = 'http://francisavmurillo.pythonanywhere.com/stickler/notes/';
+var sticklerKey = 'fmurillo'
 function syncNotes() {
 	var data = localStorage.getItem('stickler__notes');
 	$.ajax({
 		crossdomain: true,
 		cache: false , 
-		url: url , 
+		url: url + sticklerKey + '/', 
 		type: 'post' ,
 		data: {'notes' : data }, 
 		success: function(data , status , xhr) {
 			alert('Data sent');
+		} , 
+		error: function(xhr , status , err) {
+			alert('Failed to send data to ' + url);
+		}
+	});
+}
+function downloadNotes() {
+	$.ajax({
+		crossdomain: true,
+		cache: false , 
+		url: url + sticklerKey + '/', 
+		type: 'get' , 
+		success: function(data , status , xhr) {
+			localStorage.setItem('stickler__notes' , data);
+			loadSticklers();
+			alert('Data loaded');
 		} , 
 		error: function(xhr , status , err) {
 			alert('Failed to send data to ' + url);

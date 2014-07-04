@@ -65,6 +65,10 @@
 				syncNotes();
 			});
 			
+			$('#download-notes').on('click.download' , function() {
+				downloadNotes();
+			});
+			
 			// Ctr+S Function
 			$(document).on('keydown.save' , function(e) {
 				if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
