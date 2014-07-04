@@ -25,6 +25,9 @@
 <script src="js/jquery.collapse.all.min.js"></script>
 <script src="js/outerHTML-2.1.0-min.js"></script>
 <script src="js/mustache.min.js"></script>
+<script src='js/swfobject.js'></script>
+<script src='js/downloadify.min.js'></script>
+
 
 <script src='js/jquery.stickly.js'></script>
 <script src='js/note.js'></script>
@@ -34,41 +37,56 @@
 		$(document).ready(function() {
 			var NOTE_WIDTH = 200;
 			var NOTE_HEIGHT = 250;
+			
+			// Load Persistent Data
 			loadSticklers();	
+			
+			// Add A Note
 			$('#add-note').on('click.add' , function() {
 				createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note-area') ,'note-task');
 			});
 			
+			//Save Notes
 			$('#save-notes').on('click.save' , function() {
 				saveSticklers();
 			});		
 			
+			// Slideshow Notes
 			$('#slideshow-normal').on('click.slideshow' , function(){
 				displayNotesRandomly();
 			});
 			
+			// Filter By Title
 			$('#title-filter').on('change.filter' , function() {
 				filterNotes($(this).val());
 			});
-		
+			
+			$('#sync-notes').on('click.sync' , function() {
+				syncNotes();
+			});
+			
+			// Ctr+S Function
+			$(document).on('keydown.save' , function(e) {
+				if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+					e.preventDefault();
+					saveSticklers();
+				}	
+			});
 			
 		});
 		
-		document.addEventListener("keydown", function(e) {
-		  if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
-			e.preventDefault();
-			saveSticklers();
-		  }
-		}, false);
+
 </script>
 </head>
 <body>
 	<div id='wrapper'>
 		<div id='action-area'>
 			<section id='option-area'>
-				<a id='add-note' class='ui-btn ui-corner-all ui-btn-inline ui-icon-plus ui-btn-icon-left ui-mini' href='#'>Add Note</a>
-				<a id='save-notes' class='ui-btn ui-corner-all ui-btn-inline ui-icon-plus ui-btn-icon-left ui-mini' href='#'>Save Notes</a>
-				<a id='slideshow-normal' class='ui-btn ui-corner-all ui-btn-inline ui-icon-plus ui-btn-icon-left ui-mini' href='#'>Slideshow</a>
+				<button id='add-note' >Add Note</a>
+				<button id='save-notes' >Save Notes</a>
+				<button id='slideshow-normal' >Slideshow</a>
+				<button id='sync-notes' >Sync Notes</a>
+				<button id='download-notes' >Download Notes</a>
 			</section>	
 			
 			<section id='filter-area' >

@@ -166,3 +166,22 @@ function filterNotes(title) {
 		});
 	}
 }
+
+/* Syncs notes to a web service */
+var url = 'http://francisavmurillo.pythonanywhere.com/stickler/notes/fmurillo/';
+function syncNotes() {
+	var data = localStorage.getItem('stickler__notes');
+	$.ajax({
+		crossdomain: true,
+		cache: false , 
+		url: url , 
+		type: 'post' ,
+		data: {'notes' : data }, 
+		success: function(data , status , xhr) {
+			alert('Data sent');
+		} , 
+		error: function(xhr , status , err) {
+			alert('Failed to send data to ' + url);
+		}
+	});
+}
