@@ -75,6 +75,11 @@
 					e.preventDefault();
 					saveSticklers();
 				}	
+				
+				if (e.keyCode == 78 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+					e.preventDefault();
+					createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note-area') ,'note-task');
+				}	
 			});
 			
 		});
