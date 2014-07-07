@@ -52,7 +52,7 @@ function saveSticklers() {
 						];
 	var noteClassesSelector = $.map(noteClasses , function(item) {return '.' + item}).join(',');
 	$noteArea.find('.' + noteClass).each(function(idx, elem) {
-		var $cloned = $(elem).clone();
+		var $cloned = $(elem).clone().show();
 		$cloned.children(':not('+ noteClassesSelector+')').remove();
 		notes.push($cloned);
 	});
