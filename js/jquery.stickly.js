@@ -97,6 +97,29 @@
 			$text.html($text.val());
 		});
 		
+		// Context menu
+		var menuHTML = '\
+			<div id="container">\
+				<div class="hasmenu">AAA</div>\
+				<div class="hasmenu">BBB</div>\
+				<div class="hasmenu">CCC</div>\
+			</div>'
+		var $menu = $(menuHTML);
+		$(document).contextmenu({
+			delegate: ".hasmenu",
+			menu: [
+				{title: "Copy", cmd: "copy", uiIcon: "ui-icon-copy"},
+				{title: "----"},
+				{title: "More", children: [
+				{title: "Sub 1", cmd: "sub1"},
+				{title: "Sub 2", cmd: "sub1"}
+				]}
+			],
+			select: function(event, ui) {
+				alert("select " + ui.cmd + " on " + ui.target.text());
+			}
+		});
+		
 		// Place note in area randomly
 		var $area = $('#' + opts.noteArea);
 		if (recreate) {
