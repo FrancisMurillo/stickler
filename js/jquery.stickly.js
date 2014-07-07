@@ -98,6 +98,7 @@
 		});
 		
 		// Context menu
+		/**
 		var menuHTML = '\
 			<div id="container">\
 				<div class="hasmenu">AAA</div>\
@@ -119,6 +120,7 @@
 				alert("select " + ui.cmd + " on " + ui.target.text());
 			}
 		});
+		**/
 		
 		// Place note in area randomly
 		var $area = $('#' + opts.noteArea);
