@@ -1,46 +1,34 @@
-
-# A very simple Flask Hello World app for you to get started with...
-
-from flask import Flask , request
-
 import os.path as p
 import pickle
+import json
+
+from flask import Flask , request
+from sqlalchemy.orm import sessionmaker
 
 from util import crossdomain
 
-NOTE_FILE = 'stickler/notes.dat'
+from db_schema import SticklerUser , engine
+
 NOTE_KEY = 'notes'
 
-
+Session = sessionmaker(bind = engine)
+session = Session()
 app = Flask(__name__)
 
-@app.route('/stickler/')
-def hello_world():
-    return 'Hello from Flask!'
 
 @app.route('/stickler/notes/<sticklerkey>/' , methods = ['GET' , 'POST'])
 @crossdomain(origin='*')
 def notes(sticklerkey):
+    user = session.query(SticklerUser).\
+                    filter(SticklerUser.username == sticklerkey).first()
+    if not user:
+        return "User %s does not exist" % ( sticklerkey, ), 404
+    
     if request.method == 'POST':
-        notes = None
-        with open(NOTE_FILE , 'rb') as file:
-            notes = pickle.load(file)
-
         key_notes = request.form[NOTE_KEY]
-        notes[sticklerkey] = key_notes
-
-        with open(NOTE_FILE , 'wb') as file:
-            pickle.dump(notes , file)
-
-        return key_notes
+        
+        user.notes = key_notes
+        session.commit()
     elif request.method == 'GET':
-        notes = None
-        if not p.exists(NOTE_FILE):
-            with open(NOTE_FILE , 'wb') as file:
-                pickle.dump({} , file)
-
-        with open(NOTE_FILE , 'rb') as file:
-            notes = pickle.load(file)
-        return notes[sticklerkey] if sticklerkey in notes else ''
-
-app.debug = True
+        notes = user.notes
+        return notes
