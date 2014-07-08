@@ -103,7 +103,11 @@
 			<section id='filter-area' >
 				<!-- <a href='#'><i class='fa fa-filter fa-2x'></i></a> -->
 				<input id='title-filter' type='text'/>
-				<input id='server-url' type='text'/>
+				<select id='server-url' >
+					<option value="http://francisavmurillo.pythonanywhere.com/stickler/notes/" selected>francisavmurillo.pythonanywhere.com</option>
+					<option value="http://localhost:5000/stickler/notes/" >flask-local</option>
+					<option value="http://192.168.1.101:5000/stickler/notes/" > flask-nobody</option>
+				</select>
 				<!-- 
 				<a id='all-filter' class='task-filter-leftmost' href='#'>All</a> <a
 					id='task-filter' href='#'>Tasks</a> <a id='issue-filter'

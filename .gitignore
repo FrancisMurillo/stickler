@@ -7,3 +7,5 @@
 *.pyc
 python-scripts/notes.db3
 python-scripts/__pycache__/db_schema.cpython-33.pyc
+*.db3
+*.pyc

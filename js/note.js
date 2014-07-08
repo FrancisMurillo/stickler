@@ -131,7 +131,7 @@ function displayNotesRandomly() {
 	var areaClass = $.fn.stickler.defaults.noteArea;
 	var $area = $('#' + areaClass);
 	
-	var delay = 1000;
+	var delay = 600;
 	var ctr = 0;
 	shuffle($area.find('.note')).each(function(idx, el){
 		var $note = $(el);
