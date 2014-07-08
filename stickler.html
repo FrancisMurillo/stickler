@@ -25,7 +25,7 @@
 <script src="js/jquery.collapse.all.min.js"></script>
 <script src="js/outerHTML-2.1.0-min.js"></script>
 <script src="js/mustache.min.js"></script>
-<script src='js/jquery.ui-contextmenu.min.js'></script>
+<!-- <script src='js/jquery.ui-contextmenu.min.js'></script>-->
 
 
 
@@ -62,11 +62,13 @@
 			});
 			
 			$('#sync-notes').on('click.sync' , function() {
-				syncNotes();
+				var userUrl = $('#server-url').val();
+				syncNotes(userUrl);
 			});
 			
 			$('#download-notes').on('click.download' , function() {
-				downloadNotes();
+				var userUrl = $('#server-url').val();
+				downloadNotes(userUrl);
 			});
 			
 			// Ctr+S Function
@@ -101,6 +103,7 @@
 			<section id='filter-area' >
 				<!-- <a href='#'><i class='fa fa-filter fa-2x'></i></a> -->
 				<input id='title-filter' type='text'/>
+				<input id='server-url' type='text'/>
 				<!-- 
 				<a id='all-filter' class='task-filter-leftmost' href='#'>All</a> <a
 					id='task-filter' href='#'>Tasks</a> <a id='issue-filter'

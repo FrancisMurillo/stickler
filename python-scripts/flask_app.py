@@ -32,3 +32,6 @@ def notes(sticklerkey):
     elif request.method == 'GET':
         notes = user.notes
         return notes
+		
+if __name__ == '__main__':
+	app.run()

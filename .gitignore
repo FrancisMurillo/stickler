@@ -1,3 +1,7 @@
 .project
 .settings/org.eclipse.wst.common.component
 .settings/org.eclipse.wst.common.project.facet.core.xml
+*.pyc
+*.db3
+*.db3
+*.pyc

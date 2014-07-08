@@ -27,7 +27,7 @@ class SticklerUser(_Base):
     notes = Column(Text)
     
     def __repr__(self):
-        return "<SticklerUser:%s>" % (username,)
+        return "<SticklerUser:%s>" % (self.username,)
         
 # Commit
 _Base.metadata.create_all(engine)
