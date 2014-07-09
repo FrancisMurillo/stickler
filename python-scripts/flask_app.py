@@ -16,7 +16,7 @@ session = Session()
 app = Flask(__name__)
 
 
-@app.route('/stickler/notes/<sticklerkey>/' , methods = ['GET' , 'POST'])
+@app.route('/stickler/notes/<sticklerkey>/' , methods = ['GET' , 'POST' , 'OPTIONS'])
 @crossdomain(origin='*')
 def notes(sticklerkey):
     user = session.query(SticklerUser).\
@@ -29,9 +29,11 @@ def notes(sticklerkey):
         
         user.notes = key_notes
         session.commit()
+
+        return user.notes
     elif request.method == 'GET':
         notes = user.notes
         return notes
-		
+
 if __name__ == '__main__':
-	app.run()
+    app.run(host = '0.0.0.0')

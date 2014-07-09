@@ -10,7 +10,7 @@ This creates the schema required by the web service
 # Create engine
 from sqlalchemy import create_engine
 __DB_URL = "sqlite:///notes.db3"
-engine = create_engine(__DB_URL, echo = True)
+engine = create_engine(__DB_URL)
 
 # Declare base
 from sqlalchemy.ext.declarative import declarative_base
