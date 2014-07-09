@@ -211,10 +211,13 @@ function downloadNotes(userURL) {
 			
 			var new_notes = $.map( JSON.parse(data) , toJQuery);
 			var new_note_set = zipArrayPair( mapToID(new_notes) , new_notes);
-			var cur_notes = $.map( JSON.parse(localStorage.getItem('stickler__notes')) , toJQuery);
+			var cur_data = localStorage.getItem('stickler__notes');
+			cur_data = cur_data == null ? [] : JSON.parse(cur_data);
+			
+			var cur_notes = $.map( cur_data , toJQuery);
 			var cur_note_set = zipArrayPair( mapToID(cur_notes) , new_notes);
 			
-			var true_notes = $.map( $.extend(cur_note_set , new_note_set) , function(val , k) {return val.outerHTML();});
+			var true_notes = $.map( $.extend({} , cur_note_set , new_note_set) , function(val , k) {return val.outerHTML();});
 			
 			localStorage.setItem('stickler__notes' , JSON.stringify(true_notes));
 			loadSticklers();
