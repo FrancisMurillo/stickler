@@ -45,7 +45,7 @@
 		
 		var fitNoteHeight = function() {
 			$note.css({
-				'height' :getNoteHeight()
+				'height' : toPercent (getNoteHeight() / $note.parent().height())
 			});
 		}
 		
@@ -66,6 +66,13 @@
 			zIndex : 9007199254740992,	
 			stop: function() {
 				sendToTop();
+				
+				// Relative positioning
+				var p = $note.position();
+				var container = $note.parent();
+				var leftPercent = p.left / container.width();
+				var topPercent = p.top / container.height();
+				$note.css({"left": toPercent(leftPercent) , "top" : toPercent(topPercent)});
 			}
 		});
 		// Note resize
@@ -74,6 +81,14 @@
 			minHeight: opts.noteMinHeight , 
 			start : function(ev , ui) {
 				$note.resizable('option' , 'minHeight' , getNoteHeight());
+			} , 
+			stop : function(ev , ui) {
+				// Relative sizing
+				var s = $note;
+				var container = $note.parent();
+				var widthPercent = s.width() / container.width();
+				var heightPercent = s.height() / container.height();
+				$note.css({"width": toPercent(widthPercent) , "height" : toPercent(heightPercent)});
 			}
 		});
 		
@@ -126,11 +141,11 @@
 		var $area = $('#' + opts.noteArea);
 		if (recreate) {
 			$note.css({			
-				'width' 	: 	toPx(opts.noteWidth) 	, 
-				'height'	: 	toPx(opts.noteHeight)	,
+				'width' 	: 	toPercent(opts.noteWidth)  	, 
+				'height'	: 	toPercent(opts.noteHeight)	,
 			
-				'left'		:	toPx(randomPlacement(opts.noteWidth , $area.width()))	,
-				'top'		:	toPx(randomPlacement(opts.noteHeight , $area.height()))	,
+				'left'		:	toPercent(randomPlacement(opts.noteWidth ))	,
+				'top'		:	toPercent(randomPlacement(opts.noteHeight))	,
 			
 				'zIndex'	:	nextZIndex()
 			});
@@ -153,19 +168,23 @@
 		noteBodyClass	:	'note-body' , 
 		noteFooterClass	:	'note-footer' , 
 		
-		// Units in px
-		noteWidth		: 200 ,
-		noteMinWidth	: 150 ,
-		noteHeight		: 250 ,
-		noteMinHeight	: 100 
+		// Units in %
+		noteWidth		: .20 ,
+		noteMinWidth	: .15 ,
+		noteHeight		: .25 ,
+		noteMinHeight	: .10 
 	}
 	
-	function randomPlacement(value , maxValue) {
-		return	( Math.random() * (maxValue - 1 * value)).toFixed();
+	function randomPlacement(value ) {
+		return	( Math.random() * (1 - value)) ;
 	}
 	
 	function toPx(unit) {
 		return unit + 'px';
+	}
+	
+	function toPercent(unit) {
+		return (100 * unit) + "%";
 	}
 	
 	$.fn.sticklerTask = function() {

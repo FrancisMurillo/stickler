@@ -60,6 +60,10 @@
 			$('#title-filter').on('keydown.filter' , function() {
 				filterNotes($(this).val());
 			});
+			$('#title-filter').on('chage.filter' , function() {
+				filterNotes($(this).val());
+			});
+			
 			
 			$('#sync-notes').on('click.sync' , function() {
 				var userUrl = $('#server-url').val();
@@ -71,16 +75,24 @@
 				downloadNotes(userUrl);
 			});
 			
-			// Ctr+S Function
-			$(document).on('keydown.save' , function(e) {
+			
+			$(document).on('keydown.events' , function(e) {
+				// Ctrl+S Function -> Save
 				if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
 					e.preventDefault();
 					saveSticklers();
 				}	
 				
+				// Ctrl+N Function -> New Note
 				if (e.keyCode == 78 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
 					e.preventDefault();
 					createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note-area') ,'note-task');
+				}	
+				
+				// Ctrl+F Function -> Focus On Filter
+				if (e.keyCode == 70 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+					e.preventDefault();
+					$('#title-filter').focus();
 				}	
 			});
 			
