@@ -8,12 +8,15 @@
 
 <link href='css/stickler.css' rel='stylesheet' />
 <link href='css/jquery-ui-1.10.4.custom.min.css' rel='stylesheet' />
+
 <!-- <link href="css/jquery.mobile-1.4.3.min.css" rel="stylesheet"> -->
 
 <link href="css/jquery.mobile.flatui.min.css" rel="stylesheet"/>
 <link href='lib/font-awesome-4.1.0/css/font-awesome.min.css' rel='stylesheet' />
 
+<link href="css/jquery.contextMenu.css" rel="stylesheet">
 
+<script src='js/underscore-min.js'></script>
 <script src='js/jquery-2.1.1.min.js'></script>
 <script src='js/jquery-ui-1.10.4.custom.min.js'></script>
 <script src='js/jquery.ui.touch-punch.min.js'></script>
@@ -25,6 +28,9 @@
 <script src="js/jquery.collapse.all.min.js"></script>
 <script src="js/outerHTML-2.1.0-min.js"></script>
 <script src="js/mustache.min.js"></script>
+<script src="js/jquery.ui.position.js"></script>
+<script src="js/jquery.contextMenu.js" ></script>
+
 <!-- <script src='js/jquery.ui-contextmenu.min.js'></script>-->
 
 
@@ -96,8 +102,60 @@
 				}	
 			});
 			
+			var colors = ['yellow' , 'red' , 'green' , 'blue' , 'violet'];
+			var colorPrefix = 'note-';
+			var colorArr = _.map(colors , function(color) {return colorPrefix + color;});
+			// Right click context menu
+			$('#note-area').contextMenu({
+				selector: '.note', 
+				callback: function(key, opt) {
+					if (key.lastIndexOf("color-", 0) == 0) {
+						debugger
+						var $note = $('#' + opt.$trigger[0].id);
+					
+						var keyColor = key.substr("color-".length);
+						var keyClass = colorPrefix + keyColor;
+						
+						 _.each(colorArr , function(color) {$note.removeClass(color);});
+						//_.each(colorArr , $note.removeClass);
+						$note.addClass(keyClass);
+					}
+				},
+				items: {
+					'color': { 
+						'name': 'Color', 
+						"items": {
+							"color-yellow": {
+										"name": "Yellow" , 
+										'icon': 'yellow' 
+									} , 
+							"color-red": {
+									"name": "Red" , 
+									'icon': 'red' 
+								} , 
+							"color-green": {
+									"name": "Green", 
+									'icon': 'green' 
+							} ,
+							"color-blue": {
+								"name": "Blue", 
+								'icon': 'blue' 
+								} ,
+							"color-violet": {
+								"name": "Violet", 
+								'icon': 'violet' 
+								} 
+						}
+					}
+				}
+			});
+			
 		});
 		
+		
+		$(function(){
+			
+		});
 
 </script>
 </head>
@@ -134,6 +192,7 @@
 		</div>
 		<div id='note-area'>
 		</div>
+</menu>
 	</div>
 </body>
 </html>
