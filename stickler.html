@@ -101,61 +101,10 @@
 					$('#title-filter').focus();
 				}	
 			});
-			
-			var colors = ['yellow' , 'red' , 'green' , 'blue' , 'violet'];
-			var colorPrefix = 'note-';
-			var colorArr = _.map(colors , function(color) {return colorPrefix + color;});
-			// Right click context menu
-			$('#note-area').contextMenu({
-				selector: '.note', 
-				callback: function(key, opt) {
-					if (key.lastIndexOf("color-", 0) == 0) {
-						debugger
-						var $note = $('#' + opt.$trigger[0].id);
-					
-						var keyColor = key.substr("color-".length);
-						var keyClass = colorPrefix + keyColor;
-						
-						 _.each(colorArr , function(color) {$note.removeClass(color);});
-						//_.each(colorArr , $note.removeClass);
-						$note.addClass(keyClass);
-					}
-				},
-				items: {
-					'color': { 
-						'name': 'Color', 
-						"items": {
-							"color-yellow": {
-										"name": "Yellow" , 
-										'icon': 'yellow' 
-									} , 
-							"color-red": {
-									"name": "Red" , 
-									'icon': 'red' 
-								} , 
-							"color-green": {
-									"name": "Green", 
-									'icon': 'green' 
-							} ,
-							"color-blue": {
-								"name": "Blue", 
-								'icon': 'blue' 
-								} ,
-							"color-violet": {
-								"name": "Violet", 
-								'icon': 'violet' 
-								} 
-						}
-					}
-				}
-			});
-			
-		});
-		
-		
-		$(function(){
-			
-		});
+
+			// Right click context menu	
+			$('#note-area').contextMenu(buildContextMenu());
+	});
 
 </script>
 </head>

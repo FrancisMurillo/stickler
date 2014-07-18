@@ -102,6 +102,8 @@
 .context-menu-item.icon-green{ background-image: url(context-menu-icons/green.png); }
 .context-menu-item.icon-blue{ background-image: url(context-menu-icons/blue.png); }
 .context-menu-item.icon-violet{ background-image: url(context-menu-icons/violet.png); }
+.context-menu-item.icon-orange{ background-image: url(context-menu-icons/orange.png); }
+.context-menu-item.icon-white{ background-image: url(context-menu-icons/white.png); }
 
 /* vertically align inside labels */
 .context-menu-input > label > * { vertical-align: top; }

@@ -228,3 +228,43 @@ function downloadNotes(userURL) {
 		}
 	});
 }
+
+function buildContextMenu() {
+	var colors = ['yellow' , 'red' , 'green' , 'blue' , 'violet' , 'orange' , 'white'];
+	var colorPrefix = 'note-';
+	var colorArr = _.map(colors , function(color) {return colorPrefix + color;});
+	
+	return {
+		selector: '.note', 
+		build: function($trigger , e ) {
+			var	colorItems = {};
+			var keyPrefix = "color-";
+			var colorKeys = _.map(colors , function(color) {return keyPrefix + color });
+			
+			var keyFields = ['name' , 'icon'];
+			var capitalize = function(str) {return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();}
+			var colorValues = _.map(colors , function(color) {
+				return _.object(keyFields , [capitalize(color) , color]);
+			});
+			
+			var colorItems = _.object(colorKeys, colorValues);
+		
+			var	menuItems = _.extend({} , colorItems);
+			return {
+				callback: function(key, opt) {
+				debugger
+					if (key.lastIndexOf(keyPrefix, 0) == 0) {
+						var $note = $('#' + opt.$trigger[0].id);
+					
+						var keyColor = key.substr("color-".length);
+						var keyClass = colorPrefix + keyColor;
+						
+						 _.each(colorArr , function(color) {$note.removeClass(color);});
+						$note.addClass(keyClass);
+					}
+				}, 
+				items: menuItems
+			}
+		}
+	};
+}
