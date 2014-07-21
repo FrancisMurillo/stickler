@@ -77,10 +77,13 @@
 		});
 		// Note resize
 		$note.resizable({
-			minWidth: opts.noteMinWidth , 
+			containment: 'parent',
+			minWidth: opts.noteMinWidth * $note.parent().width() , 
 			minHeight: opts.noteMinHeight , 
+			//maxHeight: $note.parent().height() * 0.90 ,
 			start : function(ev , ui) {
 				$note.resizable('option' , 'minHeight' , getNoteHeight());
+				//$note.resizable('option' , 'maxHeight' , ($note.parent().height() - $note.position().top ) );
 			} , 
 			stop : function(ev , ui) {
 				// Relative sizing
@@ -111,31 +114,6 @@
 			var $text = $(this);
 			$text.html($text.val());
 		});
-		
-		// Context menu
-		/**
-		var menuHTML = '\
-			<div id="container">\
-				<div class="hasmenu">AAA</div>\
-				<div class="hasmenu">BBB</div>\
-				<div class="hasmenu">CCC</div>\
-			</div>'
-		var $menu = $(menuHTML);
-		$(document).contextmenu({
-			delegate: ".hasmenu",
-			menu: [
-				{title: "Copy", cmd: "copy", uiIcon: "ui-icon-copy"},
-				{title: "----"},
-				{title: "More", children: [
-				{title: "Sub 1", cmd: "sub1"},
-				{title: "Sub 2", cmd: "sub1"}
-				]}
-			],
-			select: function(event, ui) {
-				alert("select " + ui.cmd + " on " + ui.target.text());
-			}
-		});
-		**/
 		
 		// Place note in area randomly
 		var $area = $('#' + opts.noteArea);
@@ -209,7 +187,7 @@
 			});
 			
 			$note.find('.subtask-list').css({
-				'max-height' : $('#' + $.fn.stickler.defaults.noteArea).height() / 2
+				'max-height' : $('#' + $.fn.stickler.defaults.noteArea).height() 
 			});
 		}
 		
