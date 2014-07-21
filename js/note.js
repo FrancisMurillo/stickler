@@ -50,16 +50,14 @@ function saveSticklers() {
 						$.fn.stickler.defaults.noteBodyClass , 
 						$.fn.stickler.defaults.noteFooterClass 
 						];
-	var noteClassesSelector = $.map(noteClasses , function(item) {return '.' + item}).join(',');
+	var noteClassesSelector = $.map(noteClasses , function(item) {return '.' + item;}).join(',');
 	$noteArea.find('.' + noteClass).each(function(idx, elem) {
 		var $cloned = $(elem).clone().show();
 		$cloned.children(':not('+ noteClassesSelector+')').remove();
 		notes.push($cloned);
 	});
 	
-	var notesJSON = JSON.stringify(
-						$.map(notes , function(item) {return item.outerHTML()})
-						);
+	var notesJSON = JSON.stringify($.map(notes , function(item) {return item.outerHTML();}));
 	localStorage.setItem('stickler__notes' ,notesJSON);
 	alert('Sticklers Saved');
 }
@@ -71,7 +69,7 @@ function loadSticklers() {
 
 	// Load sticklers
 	var data = localStorage.getItem('stickler__notes');
-	if (data == null || data == "" ) return;
+	if (data == null || data == "" ) { return };
 
 	$('#' + noteArea).html('');
 	
@@ -87,8 +85,9 @@ function loadSticklers() {
 		var $note = $(elem);
 		
 		$note.stickler({} , false);
-		if ($note.hasClass(taskClass)) 
+		if ($note.hasClass(taskClass))  {
 			$note.sticklerTask();
+		}
 		
 	});
 	
@@ -132,7 +131,7 @@ function displayNotesRandomly() {
 	var areaClass = $.fn.stickler.defaults.noteArea;
 	var $area = $('#' + areaClass);
 	
-	var delay = 1000;
+	var delay = 500;
 	var ctr = 0;
 	shuffle($area.find('.note')).each(function(idx, el){
 		var $note = $(el);
@@ -170,9 +169,10 @@ function filterNotes(title) {
 }
 
 /* Syncs notes to a web service */
-var url = 'http://francisavmurillo.pythonanywhere.com/stickler/notes/';
+var DEFAULT_URL = 'http://francisavmurillo.pythonanywhere.com/stickler/notes/';
 var sticklerKey = 'fmurillo'
-function syncNotes() {
+function syncNotes(userURL) {
+	var url = typeof(userURL) == 'undefined' ||  userURL == "" ? DEFAULT_URL : userURL;
 	var data = localStorage.getItem('stickler__notes');
 	$.ajax({
 		crossdomain: true,
@@ -188,14 +188,38 @@ function syncNotes() {
 		}
 	});
 }
-function downloadNotes() {
+function downloadNotes(userURL) {
+	var url = typeof(userURL) == 'undefined' || userURL == "" ? DEFAULT_URL : userURL;
+
 	$.ajax({
 		crossdomain: true,
 		cache: false , 
 		url: url + sticklerKey + '/', 
 		type: 'get' , 
 		success: function(data , status , xhr) {
-			localStorage.setItem('stickler__notes' , data);
+			var toJQuery = function(obj) {return $(obj);}
+
+			var mapToID = function(arr) {return $.map(arr , function(obj) { return $(obj).attr('id');});}
+			var zipArrayPair = function(arr1 , arr2) { // Assuming arr1 & arr2 are of equal size
+				var length = arr1.length;
+				var obj = {};
+				for (var i = 0; i < length;i++) {
+					obj[arr1[i]] = arr2[i];
+				}
+				return obj;
+			}
+			
+			var new_notes = $.map( JSON.parse(data) , toJQuery);
+			var new_note_set = zipArrayPair( mapToID(new_notes) , new_notes);
+			var cur_data = localStorage.getItem('stickler__notes');
+			cur_data = cur_data == null ? [] : JSON.parse(cur_data);
+			
+			var cur_notes = $.map( cur_data , toJQuery);
+			var cur_note_set = zipArrayPair( mapToID(cur_notes) , new_notes);
+			
+			var true_notes = $.map( $.extend({} , cur_note_set , new_note_set) , function(val , k) {return val.outerHTML();});
+			
+			localStorage.setItem('stickler__notes' , JSON.stringify(true_notes));
 			loadSticklers();
 			alert('Data loaded');
 		} , 
@@ -203,4 +227,44 @@ function downloadNotes() {
 			alert('Failed to send data to ' + url);
 		}
 	});
+}
+
+function buildContextMenu() {
+	var colors = ['yellow' , 'red' , 'green' , 'blue' , 'violet' , 'orange' , 'white'];
+	var colorPrefix = 'note-';
+	var colorArr = _.map(colors , function(color) {return colorPrefix + color;});
+	
+	return {
+		selector: '.note', 
+		build: function($trigger , e ) {
+			var	colorItems = {};
+			var keyPrefix = "color-";
+			var colorKeys = _.map(colors , function(color) {return keyPrefix + color });
+			
+			var keyFields = ['name' , 'icon'];
+			var capitalize = function(str) {return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();}
+			var colorValues = _.map(colors , function(color) {
+				return _.object(keyFields , [capitalize(color) , color]);
+			});
+			
+			var colorItems = _.object(colorKeys, colorValues);
+		
+			var	menuItems = _.extend({} , colorItems);
+			return {
+				callback: function(key, opt) {
+				debugger
+					if (key.lastIndexOf(keyPrefix, 0) == 0) {
+						var $note = $('#' + opt.$trigger[0].id);
+					
+						var keyColor = key.substr("color-".length);
+						var keyClass = colorPrefix + keyColor;
+						
+						 _.each(colorArr , function(color) {$note.removeClass(color);});
+						$note.addClass(keyClass);
+					}
+				}, 
+				items: menuItems
+			}
+		}
+	};
 }

@@ -45,7 +45,7 @@
 		
 		var fitNoteHeight = function() {
 			$note.css({
-				'height' :getNoteHeight()
+				'height' : toPercent (getNoteHeight() / $note.parent().height())
 			});
 		}
 		
@@ -66,14 +66,32 @@
 			zIndex : 9007199254740992,	
 			stop: function() {
 				sendToTop();
+				
+				// Relative positioning
+				var p = $note.position();
+				var container = $note.parent();
+				var leftPercent = p.left / container.width();
+				var topPercent = p.top / container.height();
+				$note.css({"left": toPercent(leftPercent) , "top" : toPercent(topPercent)});
 			}
 		});
 		// Note resize
 		$note.resizable({
-			minWidth: opts.noteMinWidth , 
+			containment: 'parent',
+			minWidth: opts.noteMinWidth * $note.parent().width() , 
 			minHeight: opts.noteMinHeight , 
+			//maxHeight: $note.parent().height() * 0.90 ,
 			start : function(ev , ui) {
 				$note.resizable('option' , 'minHeight' , getNoteHeight());
+				//$note.resizable('option' , 'maxHeight' , ($note.parent().height() - $note.position().top ) );
+			} , 
+			stop : function(ev , ui) {
+				// Relative sizing
+				var s = $note;
+				var container = $note.parent();
+				var widthPercent = s.width() / container.width();
+				var heightPercent = s.height() / container.height();
+				$note.css({"width": toPercent(widthPercent) , "height" : toPercent(heightPercent)});
 			}
 		});
 		
@@ -97,40 +115,15 @@
 			$text.html($text.val());
 		});
 		
-		// Context menu
-		/**
-		var menuHTML = '\
-			<div id="container">\
-				<div class="hasmenu">AAA</div>\
-				<div class="hasmenu">BBB</div>\
-				<div class="hasmenu">CCC</div>\
-			</div>'
-		var $menu = $(menuHTML);
-		$(document).contextmenu({
-			delegate: ".hasmenu",
-			menu: [
-				{title: "Copy", cmd: "copy", uiIcon: "ui-icon-copy"},
-				{title: "----"},
-				{title: "More", children: [
-				{title: "Sub 1", cmd: "sub1"},
-				{title: "Sub 2", cmd: "sub1"}
-				]}
-			],
-			select: function(event, ui) {
-				alert("select " + ui.cmd + " on " + ui.target.text());
-			}
-		});
-		**/
-		
 		// Place note in area randomly
 		var $area = $('#' + opts.noteArea);
 		if (recreate) {
 			$note.css({			
-				'width' 	: 	toPx(opts.noteWidth) 	, 
-				'height'	: 	toPx(opts.noteHeight)	,
+				'width' 	: 	toPercent(opts.noteWidth)  	, 
+				'height'	: 	toPercent(opts.noteHeight)	,
 			
-				'left'		:	toPx(randomPlacement(opts.noteWidth , $area.width()))	,
-				'top'		:	toPx(randomPlacement(opts.noteHeight , $area.height()))	,
+				'left'		:	toPercent(randomPlacement(opts.noteWidth ))	,
+				'top'		:	toPercent(randomPlacement(opts.noteHeight))	,
 			
 				'zIndex'	:	nextZIndex()
 			});
@@ -153,19 +146,23 @@
 		noteBodyClass	:	'note-body' , 
 		noteFooterClass	:	'note-footer' , 
 		
-		// Units in px
-		noteWidth		: 200 ,
-		noteMinWidth	: 150 ,
-		noteHeight		: 250 ,
-		noteMinHeight	: 100 
+		// Units in %
+		noteWidth		: .20 ,
+		noteMinWidth	: .15 ,
+		noteHeight		: .25 ,
+		noteMinHeight	: .10 
 	}
 	
-	function randomPlacement(value , maxValue) {
-		return	( Math.random() * (maxValue - 1 * value)).toFixed();
+	function randomPlacement(value ) {
+		return	( Math.random() * (1 - value)) ;
 	}
 	
 	function toPx(unit) {
 		return unit + 'px';
+	}
+	
+	function toPercent(unit) {
+		return (100 * unit) + "%";
 	}
 	
 	$.fn.sticklerTask = function() {
@@ -190,7 +187,7 @@
 			});
 			
 			$note.find('.subtask-list').css({
-				'max-height' : $('#' + $.fn.stickler.defaults.noteArea).height() / 2
+				'max-height' : $('#' + $.fn.stickler.defaults.noteArea).height() 
 			});
 		}
 		

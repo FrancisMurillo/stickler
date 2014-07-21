@@ -8,12 +8,15 @@
 
 <link href='css/stickler.css' rel='stylesheet' />
 <link href='css/jquery-ui-1.10.4.custom.min.css' rel='stylesheet' />
+
 <!-- <link href="css/jquery.mobile-1.4.3.min.css" rel="stylesheet"> -->
 
 <link href="css/jquery.mobile.flatui.min.css" rel="stylesheet"/>
 <link href='lib/font-awesome-4.1.0/css/font-awesome.min.css' rel='stylesheet' />
 
+<link href="css/jquery.contextMenu.css" rel="stylesheet">
 
+<script src='js/underscore-min.js'></script>
 <script src='js/jquery-2.1.1.min.js'></script>
 <script src='js/jquery-ui-1.10.4.custom.min.js'></script>
 <script src='js/jquery.ui.touch-punch.min.js'></script>
@@ -25,7 +28,10 @@
 <script src="js/jquery.collapse.all.min.js"></script>
 <script src="js/outerHTML-2.1.0-min.js"></script>
 <script src="js/mustache.min.js"></script>
-<script src='js/jquery.ui-contextmenu.min.js'></script>
+<script src="js/jquery.ui.position.js"></script>
+<script src="js/jquery.contextMenu.js" ></script>
+
+<!-- <script src='js/jquery.ui-contextmenu.min.js'></script>-->
 
 
 
@@ -60,30 +66,45 @@
 			$('#title-filter').on('keydown.filter' , function() {
 				filterNotes($(this).val());
 			});
+			$('#title-filter').on('chage.filter' , function() {
+				filterNotes($(this).val());
+			});
+			
 			
 			$('#sync-notes').on('click.sync' , function() {
-				syncNotes();
+				var userUrl = $('#server-url').val();
+				syncNotes(userUrl);
 			});
 			
 			$('#download-notes').on('click.download' , function() {
-				downloadNotes();
+				var userUrl = $('#server-url').val();
+				downloadNotes(userUrl);
 			});
 			
-			// Ctr+S Function
-			$(document).on('keydown.save' , function(e) {
+			
+			$(document).on('keydown.events' , function(e) {
+				// Ctrl+S Function -> Save
 				if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
 					e.preventDefault();
 					saveSticklers();
 				}	
 				
+				// Ctrl+N Function -> New Note
 				if (e.keyCode == 78 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
 					e.preventDefault();
 					createNewNote(NOTE_WIDTH , NOTE_HEIGHT, $('#note-area') ,'note-task');
 				}	
+				
+				// Ctrl+F Function -> Focus On Filter
+				if (e.keyCode == 70 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+					e.preventDefault();
+					$('#title-filter').focus();
+				}	
 			});
-			
-		});
-		
+
+			// Right click context menu	
+			$('#note-area').contextMenu(buildContextMenu());
+	});
 
 </script>
 </head>
@@ -101,6 +122,11 @@
 			<section id='filter-area' >
 				<!-- <a href='#'><i class='fa fa-filter fa-2x'></i></a> -->
 				<input id='title-filter' type='text'/>
+				<select id='server-url' >
+					<option value="http://francisavmurillo.pythonanywhere.com/stickler/notes/" selected>francisavmurillo.pythonanywhere.com</option>
+					<option value="http://localhost:5000/stickler/notes/" >flask-local</option>
+					<option value="http://192.168.1.101:5000/stickler/notes/" > flask-nobody</option>
+				</select>
 				<!-- 
 				<a id='all-filter' class='task-filter-leftmost' href='#'>All</a> <a
 					id='task-filter' href='#'>Tasks</a> <a id='issue-filter'
@@ -115,6 +141,7 @@
 		</div>
 		<div id='note-area'>
 		</div>
+</menu>
 	</div>
 </body>
 </html>
