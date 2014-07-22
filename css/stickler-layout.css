@@ -1,0 +1,96 @@
+/* -----------------------*/
+/* ----->>> BASE <<<<-----*/
+/* -----------------------*/
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
+}
+
+#wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+/* ------------------------------*/
+/* ----->>> ACTIONS AREA <<<-----*/
+/* ------------------------------*/
+#action-area {
+	width: 100%;
+	height: 5%;
+	background: #c1bfea; /* Old browsers */
+	background: -moz-linear-gradient(top,  #c1bfea 0%, #ebe9f9 97%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c1bfea), color-stop(97%,#ebe9f9)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #c1bfea 0%,#ebe9f9 97%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #c1bfea 0%,#ebe9f9 97%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #c1bfea 0%,#ebe9f9 97%); /* IE10+ */
+	background: linear-gradient(to bottom,  #c1bfea 0%,#ebe9f9 97%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c1bfea', endColorstr='#ebe9f9',GradientType=0 ); /* IE6-9 */
+}
+
+#action-area section {	
+	padding-left: 1.00em;
+}
+
+#option-area ul li {
+	display:	inline;
+	position:	relative;	
+
+	padding-left: 0.50em;
+}
+#option-area li ul {
+	padding-top: 0.50em;
+	padding-left: 1.50em;
+	
+	height: 2em;
+	
+	border: 1pt solid red;
+}
+
+#option-area li:hover  > ul {
+	display:	block;
+}
+
+#option-area ul ul {
+	position: absolute;
+	display:	none;
+	
+	width:	20em;
+	height:	2em;	
+}
+
+#option-area ul ul li{
+	border:	1pt solid black;
+	width: 4.00em;
+}
+
+.my-btn {
+	width: 15% !important;
+}
+
+
+
+/* ---------------------------*/
+/* ----->>> NOTE AREA <<<-----*/
+/* ---------------------------*/
+#note-area {
+	position: relative;
+	width: 98%;
+	height: 91%;
+}

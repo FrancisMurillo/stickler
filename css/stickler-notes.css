@@ -1,0 +1,125 @@
+/* ---------------------------*/
+/* ----->>> BASE NOTE <<<-----*/
+/* ---------------------------*/
+.note {
+	position: absolute;
+	box-shadow: 0px 0px 5px 2px #888888;
+	padding-bottom: 1.20em;
+}
+
+.note textarea {
+	background: transparent;
+	border: none;
+	outline: none;
+	height: 1.4em;
+	font-family: Times New Roman;
+	width: 100%;
+	resize: none;
+}
+
+.note-header .timeago {
+	font-size: 0.70em;
+	color: black;
+}
+
+/* ---------------------------*/
+/* ----->>> TASK NOTE <<<-----*/
+/* ---------------------------*/
+.note-task {
+	background: #ffff88; /* Old browsers */
+	background: -moz-linear-gradient(top, #ffff88 72%, #ffff88 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(72%, #ffff88),
+		color-stop(100%, #ffff88)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffff88 72%, #ffff88 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffff88 72%, #ffff88 100%);
+	/* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #ffff88 72%, #ffff88 100%);
+	/* IE10+ */
+	background: linear-gradient(to bottom, #ffff88 72%, #ffff88 100%);
+	/* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(   startColorstr='#ffff88',
+		endColorstr='#ffff88', GradientType=0); /* IE6-9 */
+}
+
+.note-task-header {
+	background: transparent;
+	border-bottom: 1pt solid black;
+	text-align: right
+}
+
+.note-task-title {
+	font-weight: bolder;
+	font-size: 1em;
+}
+
+.note-task-result {
+	font-weight: normal;
+	font-size: 0.85em;
+}
+
+.note-header-cancel span {
+	float: right;
+}
+
+.note-task-subtask-header {
+	display: inline-block;
+}
+
+.note-task-subtask-title {
+	font-size: 0.8em;
+}
+
+
+.note-task-subtask-group {
+	background: transparent;
+	border-top: 1pt solid black;
+	border-bottom: 1pt solid black;
+}
+.note-task-subtask-add span {
+	float: left;
+}
+
+.note-task-subtask-collapse span {
+	float: right;
+}
+
+.note-task-subtask-checked span {
+	float: right;
+}
+
+.note-task-subtasks ul {
+	list-style: none;
+}
+
+
+.note-task-subtasks li {
+	padding-left: 10px;
+	font-size: 0.80em;
+}
+
+.note-task-subtasks .timeago {
+	text-align: right;
+	padding-right: 1.25em;
+	font-size: 0.70em;
+}
+
+.note-task-subtasks{
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.subtask-content input {
+	float: left;
+}
+
+.subtask-content textarea {
+	padding-left: 1.2em;
+	width: 75%;
+}
+
+.note :checked+textarea {
+	text-decoration: line-through;
+}
+

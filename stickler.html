@@ -6,7 +6,10 @@
 
 <link rel="shortcut icon" href="images/stickler.ico" type="image/x-icon" />
 
-<link href='css/stickler.css' rel='stylesheet' />
+<link href='css/stickler-notes.css' rel='stylesheet' />
+<link href='css/stickler-layout.css' rel='stylesheet' />
+<link href='css/stickler-colors.css' rel='stylesheet' />
+
 <link href='css/jquery-ui-1.10.4.custom.min.css' rel='stylesheet' />
 
 <!-- <link href="css/jquery.mobile-1.4.3.min.css" rel="stylesheet"> -->
@@ -110,7 +113,7 @@
 </head>
 <body>
 	<div id='wrapper'>
-		<div id='action-area'>
+		<header id='action-area'>
 			<section id='option-area'>
 				<button id='add-note' >Add Note</a>
 				<button id='save-notes' >Save Notes</a>
@@ -118,7 +121,11 @@
 				<button id='sync-notes' >Sync Notes</a>
 				<button id='download-notes' >Download Notes</a>
 			</section>	
-			
+		</header>
+		<section id='note-area'>
+		<!-- Notes are displayed here -->
+		</section>
+		<footer>
 			<section id='filter-area' >
 				<!-- <a href='#'><i class='fa fa-filter fa-2x'></i></a> -->
 				<input id='title-filter' type='text'/>
@@ -135,12 +142,7 @@
 				<a href='#'><i class='fa fa-database fa-2x'></i></a>
 				-->
 			</section>
-			
-			
-		
-		</div>
-		<div id='note-area'>
-		</div>
+		</footer>
 </menu>
 	</div>
 </body>
